@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:vernita/core/routing/app_router.dart';
+import 'package:vernita/vernita_app.dart';
 
 void main() {
-  runApp(const Venita());
+  runApp(VernitaApp(appRouter: AppRouter(),));
 }
 
-class Venita extends StatelessWidget {
-  const Venita({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
-}
