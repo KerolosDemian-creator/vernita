@@ -17,7 +17,7 @@ class VernitaApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Vernita',
           theme: ThemeData(scaffoldBackgroundColor: Colors.white),
-          initialRoute: Routes.homeScreen,
+          initialRoute: Routes.main,
           onGenerateRoute: appRouter.generateRoute,
         );
       },

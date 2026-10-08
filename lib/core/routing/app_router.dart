@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vernita/core/routing/routes.dart';
 import 'package:vernita/features/home/ui/home_screen.dart';
+import 'package:vernita/features/main/ui/main_layout.dart';
 import 'package:vernita/features/onboarding/ui/onboarding_screen.dart';
 
 class AppRouter {
@@ -11,6 +12,8 @@ class AppRouter {
 
       case Routes.homeScreen:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
+      case Routes.main:
+        return MaterialPageRoute(builder: (_) => const MainLayout());
 
       default:
         return MaterialPageRoute(
