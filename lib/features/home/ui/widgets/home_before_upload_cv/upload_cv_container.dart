@@ -8,8 +8,7 @@ class UploadCvContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 250.w,
+    return Container(     
       height: 270.h,
       decoration: BoxDecoration(
         color: Colors.white,
