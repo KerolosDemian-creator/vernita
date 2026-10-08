@@ -1,0 +1,46 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
+import 'package:vernita/constants/constants.dart';
+import 'package:vernita/core/theme/app_colors.dart';
+
+class AppTextStyles {
+  // Poppins
+  static TextStyle font12GreyPoppins400W = TextStyle(
+    fontFamily: AppFonts.poppins,
+    fontSize: 12.sp,
+    fontWeight: FontWeight.w400,
+    color: AppColors.greyText,
+  );
+  static TextStyle font13LightPeachPoppins400W = TextStyle(
+    fontFamily: AppFonts.poppins,
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w400,
+    color: AppColors.lightPeachText,
+  );
+  static TextStyle font13GreyPoppins400W = TextStyle(
+    fontFamily: AppFonts.poppins,
+    fontSize: 11.sp,
+    fontWeight: FontWeight.w400,
+    color: AppColors.greyText,
+  );
+
+  static TextStyle font14BrownPoppins600W = TextStyle(
+    fontFamily: AppFonts.poppins,
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.brownText,
+  );
+  static TextStyle font28BrownPoppins700W = TextStyle(
+    fontFamily: AppFonts.poppins,
+    fontSize: 28.sp,
+    fontWeight: FontWeight.w700,
+    color: AppColors.brownText,
+  );
+
+  /// Inter
+  static TextStyle font16BrownInter600W = TextStyle(
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.brownText,
+  );
+}

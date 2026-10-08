@@ -3,6 +3,7 @@ import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:vernita/constants/constants.dart';
 import 'package:vernita/core/helper/spacing.dart';
+import 'package:vernita/core/theme/app_text_styles.dart';
 
 class TipsForCvContainer extends StatelessWidget {
   const TipsForCvContainer({super.key});
@@ -11,10 +12,10 @@ class TipsForCvContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-      height: 100.h,
+      height: 105.h,
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Colors.red,
+        color: Colors.white.withOpacity(.7),
         borderRadius: BorderRadius.circular(24.r),
       ),
       child: Row(
@@ -25,9 +26,14 @@ class TipsForCvContainer extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Tips for a great CV'),
                 Text(
-                  'Keep it updated andrelevant to increase yourchances.',
+                  'Tips for a great CV',
+                  style: AppTextStyles.font14BrownPoppins600W,
+                ),
+                verticalSpace(3),
+                Text(
+                  'Keep it updated and relevant to increase your chances.',
+                  style: AppTextStyles.font13GreyPoppins400W,
                   maxLines: 3,
                 ),
               ],

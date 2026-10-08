@@ -19,7 +19,7 @@ class HomeBody extends StatelessWidget {
             HomeHeader(),
             verticalSpace(50),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 34.w),
+              padding: EdgeInsets.symmetric(horizontal: 30.w),
               child: Column(
                 children: [
                   UploadCvContainer(),
