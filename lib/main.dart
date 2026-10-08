@@ -3,6 +3,5 @@ import 'package:vernita/core/routing/app_router.dart';
 import 'package:vernita/vernita_app.dart';
 
 void main() {
-  runApp(VernitaApp(appRouter: AppRouter(),));
+  runApp(VernitaApp(appRouter: AppRouter()));
 }
-
