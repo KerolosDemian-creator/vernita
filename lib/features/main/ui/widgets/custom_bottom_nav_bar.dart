@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
+import 'package:vernita/core/theme/app_colors.dart';
 import 'package:vernita/features/main/logic/bottom_nav_cubit.dart';
 
-class _NavColors {
-  static const primary = Color(0xFFE8844F);
-  static const primaryLight = Color(0xFFFCE3D2);
-  static const barBg = Color(0xFFFFF3E6);
-  static const inactive = Color(0xFF8A8A8A);
-}
 
 /// بيانات كل تاب: label + دالة بترجّع الأيقونة بلون حسب الحالة
 class NavItemModel {
@@ -59,7 +54,7 @@ class CustomBottomNavBar extends StatelessWidget {
             height: 85.h,
             margin: EdgeInsets.fromLTRB(16.w, 0, 16.w, 16.h),
             decoration: BoxDecoration(
-              color: _NavColors.barBg,
+              color: AppColors.warmCream,
               borderRadius: BorderRadius.circular(30.r),
               boxShadow: [
                 BoxShadow(
@@ -98,7 +93,7 @@ class CustomBottomNavBar extends StatelessWidget {
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: _NavColors.primary.withOpacity(0.35),
+                      color: AppColors.selectedIcon.withOpacity(.35),
                       blurRadius: 14,
                       offset: const Offset(0, 6),
                     ),
@@ -142,7 +137,9 @@ class _NavItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = isSelected ? _NavColors.primary : _NavColors.inactive;
+    final color = isSelected
+        ? AppColors.lightPeachText
+        : AppColors.nonSelectedIcon;
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -156,7 +153,9 @@ class _NavItem extends StatelessWidget {
             padding: EdgeInsets.all(10.r),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: isSelected ? _NavColors.primaryLight : Colors.transparent,
+              color: isSelected
+                  ? AppColors.selectedIcon.withOpacity(.1)
+                  : Colors.transparent,
             ),
             child: model.iconBuilder(color),
           ),
