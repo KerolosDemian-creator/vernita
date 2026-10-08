@@ -4,6 +4,8 @@ class AppSvgs {
       'lib/core/utils/Svgs/notification_icon.svg';
   static const String uploadSvIcon = 'lib/core/utils/Svgs/upload_sv_icon.svg';
   static const String securityIcon = 'lib/core/utils/Svgs/security_icon.svg';
+  static const String tipsForCvIcon =
+      'lib/core/utils/Svgs/tips_for_cv_icon.svg';
 }
 
 class AppFonts {
