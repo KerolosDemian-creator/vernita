@@ -4,37 +4,48 @@ import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:vernita/core/theme/app_colors.dart';
 import 'package:vernita/features/main/logic/bottom_nav_cubit.dart';
 
-
-/// بيانات كل تاب: label + دالة بترجّع الأيقونة بلون حسب الحالة
+/// بيانات كل تاب: label + index الصفحة + دالة بترجّع الأيقونة بلون حسب الحالة
 class NavItemModel {
   final String label;
+  final int tabIndex; // مكان الصفحة في IndexedStack
   final Widget Function(Color color) iconBuilder;
 
-  const NavItemModel({required this.label, required this.iconBuilder});
+  const NavItemModel({
+    required this.label,
+    required this.tabIndex,
+    required this.iconBuilder,
+  });
 }
 
 class CustomBottomNavBar extends StatelessWidget {
+  /// index صفحة الـ Interview في الـ IndexedStack
+  static const int interviewTabIndex = 2;
+
   final VoidCallback onCenterTap;
 
   const CustomBottomNavBar({super.key, required this.onCenterTap});
 
-  // دلوقتي Icons عادية، وبعدين بدّلها بصورك (شوف الأسفل)
   static final List<NavItemModel> _items = [
     NavItemModel(
       label: 'Home',
+      tabIndex: 0,
       iconBuilder: (c) => Icon(Icons.home_rounded, color: c, size: 24.r),
     ),
     NavItemModel(
       label: 'Calendar',
+      tabIndex: 1,
       iconBuilder: (c) =>
           Icon(Icons.calendar_month_rounded, color: c, size: 24.r),
     ),
+    // index 2 محجوز للزرار اللي في النص (Interview)
     NavItemModel(
       label: 'Analytics',
+      tabIndex: 3,
       iconBuilder: (c) => Icon(Icons.bar_chart_rounded, color: c, size: 24.r),
     ),
     NavItemModel(
       label: 'Profile',
+      tabIndex: 4,
       iconBuilder: (c) =>
           Icon(Icons.person_outline_rounded, color: c, size: 24.r),
     ),
@@ -43,9 +54,10 @@ class CustomBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentIndex = context.watch<BottomNavCubit>().state;
+    final isInterviewSelected = currentIndex == interviewTabIndex;
 
     return SizedBox(
-      height: 120.h, // 70 للبار + 16 margin + الجزء البارز من الزرار
+      height: 120.h,
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
@@ -66,26 +78,32 @@ class CustomBottomNavBar extends StatelessWidget {
             ),
             child: Row(
               children: [
-                _buildItem(context, 0, currentIndex),
-                _buildItem(context, 1, currentIndex),
+                _buildItem(context, _items[0], currentIndex),
+                _buildItem(context, _items[1], currentIndex),
                 SizedBox(width: 72.w), // مكان الزرار اللي في النص
-                _buildItem(context, 2, currentIndex),
-                _buildItem(context, 3, currentIndex),
+                _buildItem(context, _items[2], currentIndex),
+                _buildItem(context, _items[3], currentIndex),
               ],
             ),
           ),
 
-          // الزرار العائم
+          // الزرار العائم (Interview)
           Positioned(
             top: 0,
             child: GestureDetector(
               onTap: onCenterTap,
-              child: Container(
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 250),
                 width: 64.r,
                 height: 64.r,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 4.r),
+                  border: Border.all(
+                    color: isInterviewSelected
+                        ? AppColors.lightPeachText
+                        : Colors.white,
+                    width: 4.r,
+                  ),
                   gradient: const LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
@@ -99,7 +117,6 @@ class CustomBottomNavBar extends StatelessWidget {
                     ),
                   ],
                 ),
-                // بدّلها بصورتك لما تجهز
                 child: Icon(
                   Icons.video_call_rounded,
                   color: Colors.white,
@@ -113,12 +130,16 @@ class CustomBottomNavBar extends StatelessWidget {
     );
   }
 
-  Widget _buildItem(BuildContext context, int index, int currentIndex) {
+  Widget _buildItem(
+    BuildContext context,
+    NavItemModel model,
+    int currentIndex,
+  ) {
     return Expanded(
       child: _NavItem(
-        model: _items[index],
-        isSelected: index == currentIndex,
-        onTap: () => context.read<BottomNavCubit>().changeTab(index),
+        model: model,
+        isSelected: model.tabIndex == currentIndex,
+        onTap: () => context.read<BottomNavCubit>().changeTab(model.tabIndex),
       ),
     );
   }

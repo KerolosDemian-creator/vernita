@@ -30,6 +30,21 @@ class AppTextStyles {
     fontWeight: FontWeight.w600,
     color: AppColors.brownText,
   );
+
+  static TextStyle font16BrownPoppins400W1Height1Ov6 = TextStyle(
+    fontFamily: AppFonts.poppins,
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w400,
+    height: 1.6,
+    color: AppColors.brownText,
+  );
+
+  static TextStyle font20BrownPoppins600W = TextStyle(
+    fontFamily: AppFonts.poppins,
+    fontSize: 20.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.brownText,
+  );
   static TextStyle font28BrownPoppins700W = TextStyle(
     fontFamily: AppFonts.poppins,
     fontSize: 28.sp,
