@@ -51,6 +51,13 @@ class AppColors {
     colors: [AppColors.lightPeachText, Color(0xFFFFB18C)],
   );
 
+// Upcoming mock container gradient
+    static const LinearGradient upcomingMockContainerGradient = LinearGradient(
+    begin: AlignmentGeometry.centerLeft,
+    end: AlignmentGeometry.centerRight,
+    colors: [Color(0xffFEDFA1), Color(0xFFFDB491)],
+  );
+
   // Button gradient
   static const LinearGradient linear2 = LinearGradient(
     colors: [Color(0x00DC8F5F), Color(0xFFFFB18C)],

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:vernita/core/helper/spacing.dart';
-import 'package:vernita/features/home/ui/widgets/home_before_upload_cv/cv_listener.dart';
-import 'package:vernita/features/home/ui/widgets/home_before_upload_cv/tips_for_cv_container.dart';
-import 'package:vernita/features/home/ui/widgets/home_before_upload_cv/your_data_is_secure_txt.dart';
+import 'package:vernita/features/home/ui/widgets/home_after_upload_cv/home_after_upload_cv.dart';
 import 'package:vernita/features/home/ui/widgets/home_header.dart';
 
 class HomeBody extends StatelessWidget {
@@ -17,20 +15,11 @@ class HomeBody extends StatelessWidget {
         child: Column(
           children: [
             const HomeHeader(),
-            verticalSpace(50),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30.w),
-              child: Column(
-                children: [
-                  const CvListener(),
-                  verticalSpace(13),
-                  const YourDataIsSecureTxt(),
-                  verticalSpace(35),
+            verticalSpace(30),
 
-                  const TipsForCvContainer(),
-                ],
-              ),
-            ),
+            HomeAfterUploadCv(),
+
+            //   const  HomeBeforeUploadCv()
           ],
         ),
       ),
