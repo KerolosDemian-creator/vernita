@@ -15,6 +15,7 @@ class HomeAfterUploadCv extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+          verticalSpace(20),
         UpcomingMockContainer(),
         verticalSpace(20),
         SeeDetailsRow(),
