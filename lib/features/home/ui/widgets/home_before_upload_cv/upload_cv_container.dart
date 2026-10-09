@@ -5,7 +5,7 @@ import 'package:vernita/core/helper/spacing.dart';
 import 'package:vernita/core/theme/app_colors.dart';
 import 'package:vernita/core/theme/app_text_styles.dart';
 import 'package:vernita/core/widgets/app_button.dart';
-import 'package:vernita/features/home/logic/home_cubit.dart';
+import 'package:vernita/features/home/logic/cv_upload_cubit.dart';
 
 class UploadCvContainer extends StatelessWidget {
   const UploadCvContainer({super.key});
@@ -55,7 +55,7 @@ class UploadCvContainer extends StatelessWidget {
             ),
             verticalSpace(32),
 
-            AppButton(onTap: () => context.read<HomeCubit>().pickCv()),
+            AppButton(onTap: () => context.read<CvUploadCubit>().pickCv()),
           ],
         ),
       ),
