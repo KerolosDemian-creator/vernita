@@ -12,15 +12,17 @@ class HomeBody extends StatelessWidget {
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w),
-        child: Column(
-          children: [
-            const HomeHeader(),
-            verticalSpace(30),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const HomeHeader(),
+              verticalSpace(20),
 
-            HomeAfterUploadCv(),
+              HomeAfterUploadCv(),
 
-            //   const  HomeBeforeUploadCv()
-          ],
+              //   const  HomeBeforeUploadCv()
+            ],
+          ),
         ),
       ),
     );
