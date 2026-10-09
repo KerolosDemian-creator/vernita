@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:vernita/core/helper/spacing.dart';
-import 'package:vernita/features/home/ui/widgets/home_after_upload_cv/home_after_upload_cv.dart';
 import 'package:vernita/features/home/ui/widgets/home_header.dart';
+import 'package:vernita/features/home/ui/widgets/home_listener.dart';
 
 class HomeBody extends StatelessWidget {
   const HomeBody({super.key});
@@ -17,10 +17,7 @@ class HomeBody extends StatelessWidget {
             children: [
               const HomeHeader(),
               verticalSpace(20),
-
-              HomeAfterUploadCv(),
-
-              //   const  HomeBeforeUploadCv()
+              HomeListener(),
             ],
           ),
         ),

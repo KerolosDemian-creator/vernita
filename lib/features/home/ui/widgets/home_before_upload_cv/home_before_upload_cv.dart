@@ -14,6 +14,7 @@ class HomeBeforeUploadCv extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 30.w),
       child: Column(
         children: [
+          verticalSpace(50),
           const CvListener(),
           verticalSpace(13),
           const YourDataIsSecureTxt(),
