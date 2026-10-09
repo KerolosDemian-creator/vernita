@@ -6,15 +6,20 @@ class AppColors {
   // =========================
 
   static const Color brownText = Color(0xFF280F05);
+  static const Color lightBrown = Color(0xFF4A3A32);
 
   static const Color lightPeachText = Color(0xFFDC8F5F);
   static const Color warmPeach = Color(0xFFFFEDD5);
   static const Color warmCream = Color(0xFFFEF5E8);
 
   static const Color wrongAlert = Color(0xFFEF4444);
+  static const Color terracottaRed = Color(0xFFAD5A54);
   static const Color lightRed = Color(0xFFFCA5A5);
+  static const Color blushPink = Color(0xFFFFDFD8);
 
+  static const Color oliveForest = Color(0xFF3F5B24);
   static const Color greenAlert = Color(0xFF22C55E);
+  static const Color lightGreeen = Color(0xFFDFF3C0);
 
   static const Color greyText = Color(0xFF525252);
 
@@ -51,11 +56,28 @@ class AppColors {
     colors: [AppColors.lightPeachText, Color(0xFFFFB18C)],
   );
 
-// Upcoming mock container gradient
-    static const LinearGradient upcomingMockContainerGradient = LinearGradient(
+  // Upcoming mock container gradient
+  static const LinearGradient upcomingMockContainerGradient = LinearGradient(
     begin: AlignmentGeometry.centerLeft,
     end: AlignmentGeometry.centerRight,
     colors: [Color(0xffFEDFA1), Color(0xFFFDB491)],
+  );
+
+  // Streak container gradient
+  static const LinearGradient steakContainerGradient = LinearGradient(
+    begin: AlignmentGeometry.topLeft,
+    end: AlignmentGeometry.bottomRight,
+    colors: [Color(0xffFDEDC4), Color(0xFFF6DEA0)],
+  );
+  static const LinearGradient mocksCompletedContainerGradient = LinearGradient(
+    begin: AlignmentGeometry.topLeft,
+    end: AlignmentGeometry.bottomRight,
+    colors: [Color(0xffF4DDCA), Color(0xFFFBCBAB)],
+  );
+  static const LinearGradient targetReadinessContainerGradient = LinearGradient(
+    begin: AlignmentGeometry.topLeft,
+    end: AlignmentGeometry.bottomRight,
+    colors: [Color(0xffFBE4CD), Color(0xFFF8C1A6)],
   );
 
   // Button gradient

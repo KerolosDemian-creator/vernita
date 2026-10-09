@@ -11,6 +11,14 @@ class AppSvgs {
       'lib/core/utils/Svgs/upcoming_mock_card_icon.svg';
 
   static const String energyIcon = 'lib/core/utils/Svgs/energy_icon.svg';
+  static const String streakIcon = 'lib/core/utils/Svgs/streak_icon.svg';
+  static const String fireIcon = 'lib/core/utils/Svgs/fire_icon.svg';
+  static const String targetReadinessIcon =
+      'lib/core/utils/Svgs/target_readiness_icon.svg';
+}
+
+class AppImages {
+  static const String keepItUpImage = 'lib/core/utils/images/keep_up_image.png';
 }
 
 class AppFonts {
