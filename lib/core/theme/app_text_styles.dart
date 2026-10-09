@@ -5,6 +5,13 @@ import 'package:vernita/core/theme/app_colors.dart';
 
 class AppTextStyles {
   // Poppins
+
+  static TextStyle font11GreyPoppins400W = TextStyle(
+    fontFamily: AppFonts.poppins,
+    fontSize: 11.sp,
+    fontWeight: FontWeight.w400,
+    color: AppColors.greyText,
+  );
   static TextStyle font12GreyPoppins400W = TextStyle(
     fontFamily: AppFonts.poppins,
     fontSize: 12.sp,
@@ -29,13 +36,13 @@ class AppTextStyles {
     fontWeight: FontWeight.w400,
     color: AppColors.lightPeachText,
   );
-  static TextStyle font13GreyPoppins400W = TextStyle(
-    fontFamily: AppFonts.poppins,
-    fontSize: 11.sp,
-    fontWeight: FontWeight.w400,
-    color: AppColors.greyText,
-  );
 
+  static TextStyle font13LightPeachPoppins600W = TextStyle(
+    fontFamily: AppFonts.poppins,
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.lightPeachText,
+  );
   static TextStyle font14BrownPoppins600W = TextStyle(
     fontFamily: AppFonts.poppins,
     fontSize: 14.sp,
@@ -57,6 +64,12 @@ class AppTextStyles {
     color: AppColors.brownText,
   );
 
+  static TextStyle font18BrownPoppins700W = TextStyle(
+    fontFamily: AppFonts.poppins,
+    fontSize: 18.sp,
+    fontWeight: FontWeight.w700,
+    color: AppColors.brownText,
+  );
   static TextStyle font20BrownPoppins600W = TextStyle(
     fontFamily: AppFonts.poppins,
     fontSize: 20.sp,

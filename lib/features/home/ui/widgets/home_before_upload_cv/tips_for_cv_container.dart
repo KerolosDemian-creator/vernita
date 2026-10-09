@@ -33,7 +33,7 @@ class TipsForCvContainer extends StatelessWidget {
                 verticalSpace(3),
                 Text(
                   'Keep it updated and relevant to increase your chances.',
-                  style: AppTextStyles.font13GreyPoppins400W,
+                  style: AppTextStyles.font11GreyPoppins400W,
                   maxLines: 3,
                 ),
               ],
