@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vernita/features/home/logic/home_cubit.dart';
-import 'package:vernita/features/home/logic/home_state.dart';
+import 'package:vernita/features/home/logic/cv_upload_cubit.dart';
+import 'package:vernita/features/home/logic/cv_upload_state.dart';
 import 'package:vernita/features/home/ui/home_screen.dart';
 import 'package:vernita/features/home/ui/widgets/home_before_upload_cv/error_dialog.dart';
 import 'package:vernita/features/interview/ui/interview_screen.dart';
@@ -28,7 +28,8 @@ class MainLayout extends StatelessWidget {
           body: IndexedStack(index: index, children: pages),
           bottomNavigationBar: CustomBottomNavBar(
             onCenterTap: () {
-              final hasCv = context.read<HomeCubit>().state is HomeCvUploaded;
+              final hasCv =
+                  context.read<CvUploadCubit>().state is HomeCvUploaded;
 
               if (!hasCv) {
                 showDialog(

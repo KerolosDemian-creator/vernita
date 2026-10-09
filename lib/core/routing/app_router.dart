@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vernita/core/di/dependency_injection.dart';
 import 'package:vernita/core/routing/routes.dart';
-import 'package:vernita/features/home/logic/home_cubit.dart';
+import 'package:vernita/features/home/logic/cv_upload_cubit.dart';
 import 'package:vernita/features/home/ui/home_screen.dart';
 import 'package:vernita/features/interview/ui/interview_screen.dart';
 import 'package:vernita/features/main/logic/bottom_nav_cubit.dart';
@@ -25,13 +25,13 @@ class AppRouter {
           builder: (_) => MultiBlocProvider(
             providers: [
               BlocProvider(create: (_) => BottomNavCubit()),
-              BlocProvider(create: (_) => getIt<HomeCubit>()),
+              BlocProvider(create: (_) => getIt<CvUploadCubit>()),
             ],
             child: const MainLayout(),
           ),
         );
 
-      // ❌ اتشال: case Routes.errorDialog
+
 
       default:
         return MaterialPageRoute(
