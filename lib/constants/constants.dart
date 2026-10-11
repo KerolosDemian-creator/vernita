@@ -15,6 +15,21 @@ class AppSvgs {
   static const String fireIcon = 'lib/core/utils/Svgs/fire_icon.svg';
   static const String targetReadinessIcon =
       'lib/core/utils/Svgs/target_readiness_icon.svg';
+
+  // Notification Svgs
+  static const String analyticsIcon = 'lib/core/utils/Svgs/analytics_icon.svg';
+  static const String unreadNotificationIcon =
+      'lib/core/utils/Svgs/unread_notification_icon.svg';
+  static const String dateNotificationIcon =
+      'lib/core/utils/Svgs/date_icon.svg';
+  static const String milestonNotificationIcon =
+      'lib/core/utils/Svgs/mileston_icon.svg';
+  static const String progressNotificationIcon =
+      'lib/core/utils/Svgs/progress_icon.svg';
+  static const String featureNotificationIcon =
+      'lib/core/utils/Svgs/feature_icon.svg';
+  static const String avatarAvailableIcon =
+      'lib/core/utils/Svgs/avatar_available_icon.svg';
 }
 
 class AppImages {

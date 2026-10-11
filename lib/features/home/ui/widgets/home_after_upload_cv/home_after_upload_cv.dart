@@ -32,7 +32,7 @@ class HomeAfterUploadCv extends StatelessWidget {
                     firstTxt: '4 Weeks',
                     secondTxt: 'Weekly Streak',
                     thirdTxt: '2 / 3 mocks this week',
-                    containerColor: AppColors.steakContainerGradient,
+                    containerColor: AppColors.streakContainerGradient,
                     bottomRow: Row(
                       children: [
                         SvgPicture.asset(AppSvgs.streakIcon),
