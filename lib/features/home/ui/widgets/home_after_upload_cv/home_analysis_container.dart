@@ -52,7 +52,7 @@ class HomeAnalysisContainer extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 3.h),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12.r),
-                  color: AppColors.lightGreeen,
+                  color: AppColors.lightGreen,
                 ),
                 child: Text(
                   txtInContaierIconRow,

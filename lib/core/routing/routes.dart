@@ -3,5 +3,6 @@ class Routes {
   static const String onboarding = '/onboarding';
   static const String homeScreen = '/home';
   static const String interviewSession = '/interviewSession';
+  static const String notification = '/notification';
 
 }

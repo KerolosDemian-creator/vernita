@@ -25,7 +25,11 @@ class AppColors {
   static const Color personalTask = Color(0xFF9B51E0);
   static const Color textFieldText = Color(0xFFB1A399);
   static const Color white = Color(0xFFFEFBF5);
-
+  static const Color softBlush = Color(0xFFFEDCD8);
+  static const Color paleApricot = Color(0xFFFEE6D0);
+  static const Color softSage = Color(0xFFE5F4DA);
+  static const Color pastelPeriwinkle = Color(0xFFCFDCF7);
+  static const Color softLilac = Color(0xFFEBD2F5);
   // =========================
   // Gradient Colors
   // =========================
@@ -43,7 +47,8 @@ class AppColors {
   // Upcoming mock
   static const Color upcomingMockGradientStart = Color(0xFFFEDFA1);
   static const Color upcomingMockGradientEnd = Color(0xFFFDB491);
-
+  static const Color softCoralPeach = Color(0xFFFEAA7A);
+  static const Color vibrantCoral = Color(0xFFFE7461);
   // Streak
   static const Color streakGradientStart = Color(0xFFFDEDC4);
   static const Color streakGradientEnd = Color(0xFFF6DEA0);
@@ -51,7 +56,7 @@ class AppColors {
   // Mocks completed
   static const Color mocksCompletedGradientStart = Color(0xFFF4DDCA);
   static const Color mocksCompletedGradientEnd = Color(0xFFFBCBAB);
-
+  static const Color softApricot = Color(0xFFFEEAD2);
   // Target readiness
   static const Color targetReadinessGradientStart = Color(0xFFFBE4CD);
   static const Color targetReadinessGradientEnd = Color(0xFFF8C1A6);
@@ -96,6 +101,11 @@ class AppColors {
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [streakGradientStart, streakGradientEnd],
+  );
+  static const LinearGradient analyticsIconContainerGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [softCoralPeach, vibrantCoral],
   );
 
   static const LinearGradient mocksCompletedContainerGradient = LinearGradient(

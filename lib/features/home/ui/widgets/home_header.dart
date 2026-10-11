@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:vernita/constants/constants.dart';
+import 'package:vernita/core/helper/extensions.dart';
+import 'package:vernita/core/routing/routes.dart';
 import 'package:vernita/core/theme/app_colors.dart';
 import 'package:vernita/core/theme/app_text_styles.dart';
 
@@ -24,13 +26,16 @@ class HomeHeader extends StatelessWidget {
         ),
         Spacer(),
 
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50.r),
-            color: AppColors.white,
+        GestureDetector(
+          onTap: () => context.pushNamed(Routes.notification),
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50.r),
+              color: AppColors.white,
+            ),
+            child: SvgPicture.asset(AppSvgs.notficationsIcon),
           ),
-          child: SvgPicture.asset(AppSvgs.notficationsIcon),
         ),
       ],
     );
