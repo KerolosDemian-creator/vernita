@@ -12,6 +12,7 @@ class VernitaApp extends StatelessWidget {
   return ScreenUtilPlusInit(
       designSize: const Size(375, 812),
       splitScreenMode: true,
+      ensureScreenSize: true,
       builder: (context, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -20,7 +21,7 @@ class VernitaApp extends StatelessWidget {
            
             scaffoldBackgroundColor: Colors.white,
           ),
-          initialRoute: Routes.onboarding,
+          initialRoute: Routes.logIn,          
           onGenerateRoute: appRouter.generateRoute,
         );
       },
