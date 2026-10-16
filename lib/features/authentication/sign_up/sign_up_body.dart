@@ -26,6 +26,11 @@ class _SignUpBodyState extends State<SignUpBody> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 
+
+
+
+  
+
   bool _agreed = true;
 
   @override
