@@ -17,7 +17,7 @@ class AuthDivider extends StatelessWidget {
         line,
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 14.w),
-          child: Text(label, style: AppTextStyles.divider),
+          child: Text(label, style: AppTextStyles.font12GreyPoppins400W),
         ),
         line,
       ],

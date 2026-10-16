@@ -57,7 +57,7 @@ class _SocialButton extends StatelessWidget {
             children: [
               icon,
               SizedBox(width: 12.w),
-              Text(label, style: AppTextStyles.social),
+              Text(label, style: AppTextStyles.font14BrownPoppins600W),
             ],
           ),
         ),

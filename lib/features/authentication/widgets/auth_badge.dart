@@ -137,12 +137,7 @@ class _QuestionCorner extends StatelessWidget {
       ),
       child: Text(
         '?',
-        style: TextStyle(
-          fontFamily: AppTextStyles.poppins,
-          fontWeight: FontWeight.w700,
-          fontSize: 12.sp,
-          color: AppColors.primary,
-        ),
+        style: AppTextStyles.font13PrimaryPoppins700W.copyWith(fontSize: 12.sp),
       ),
     );
   }

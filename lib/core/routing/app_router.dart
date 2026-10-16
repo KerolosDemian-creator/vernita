@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vernita/core/di/dependency_injection.dart';
 import 'package:vernita/core/routing/routes.dart';
-import 'package:vernita/features/authentication/forget_password/forget_pass_screen.dart';
-import 'package:vernita/features/authentication/log_in/log_in_screen.dart';
-import 'package:vernita/features/authentication/sign_up/sign_up_screen.dart';
+import 'package:vernita/features/authentication/forget_password/ui/forget_pass_screen.dart';
+import 'package:vernita/features/authentication/log_in/ui/log_in_screen.dart';
+import 'package:vernita/features/authentication/sign_up/ui/sign_up_screen.dart';
 import 'package:vernita/features/home/ui/home_screen.dart';
+import 'package:vernita/features/home/logic/cv_upload_cubit.dart';
+import 'package:vernita/features/home/ui/home_screen.dart';
+import 'package:vernita/features/interview/ui/interview_screen.dart';
+import 'package:vernita/features/main/logic/bottom_nav_cubit.dart';
+import 'package:vernita/features/main/ui/main_layout.dart';
 import 'package:vernita/features/onboarding/ui/onboarding_screen.dart';
 
 class AppRouter {
@@ -23,6 +30,23 @@ class AppRouter {
 
       case Routes.home:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
+      case Routes.homeScreen:
+        return MaterialPageRoute(builder: (_) => const HomeScreen());
+      case Routes.interviewSession:
+        return MaterialPageRoute(builder: (_) => const InterviewScreen());
+
+      case Routes.main:
+        return MaterialPageRoute(
+          builder: (_) => MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (_) => BottomNavCubit()),
+              BlocProvider(create: (_) => getIt<CvUploadCubit>()),
+            ],
+            child: const MainLayout(),
+          ),
+        );
+
+
 
       default:
         return MaterialPageRoute(

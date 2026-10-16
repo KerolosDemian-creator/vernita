@@ -47,7 +47,7 @@ class AuthPrimaryButton extends StatelessWidget {
             children: [
               Padding(
                 padding: EdgeInsets.only(right: showArrow ? 28.w : 0),
-                child: Text(label, style: AppTextStyles.button),
+                child: Text(label, style: AppTextStyles.font16BrownPoppins600W),
               ),
               if (showArrow)
                 Positioned(

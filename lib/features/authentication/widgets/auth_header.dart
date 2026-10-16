@@ -33,7 +33,9 @@ class AuthHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (leading != null) ...[leading!, SizedBox(height: 14.h)],
-                Text(title, style: AppTextStyles.title(size: titleSize)),
+                Text(title, style: AppTextStyles.font40BrownPoppins700W.copyWith(
+                    fontSize: titleSize.sp,
+                  )),
                 SizedBox(height: 6.h),
                 subtitle,
               ],

@@ -9,7 +9,7 @@ class VernitaApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  return ScreenUtilPlusInit(
+    return ScreenUtilPlusInit(
       designSize: const Size(375, 812),
       splitScreenMode: true,
       ensureScreenSize: true,
@@ -17,11 +17,18 @@ class VernitaApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Vernita',
-          theme: ThemeData(
-           
-            scaffoldBackgroundColor: Colors.white,
+          theme: ThemeData(scaffoldBackgroundColor: Colors.transparent),
+          builder: (context, child) => Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Color(0xFFFFF3E6), Color(0xFFFCE3D2)],
+              ),
+            ),
+            child: child,
           ),
-          initialRoute: Routes.logIn,          
+          initialRoute: Routes.logIn,           
           onGenerateRoute: appRouter.generateRoute,
         );
       },
