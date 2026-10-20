@@ -23,7 +23,7 @@ class SignUpBody extends StatelessWidget {
         if (state.status == SignUpStatus.success) {
           Navigator.pushNamedAndRemoveUntil(
             context,
-            Routes.home,
+            Routes.main,
             (route) => false,
           );
         } else if (state.status == SignUpStatus.failure) {

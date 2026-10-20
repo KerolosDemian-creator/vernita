@@ -118,4 +118,50 @@ class AppTextStyles {
     fontWeight: FontWeight.w700,
     color: AppColors.brownText,
   );
+
+
+    // ================= Profile / Settings / Notifications / Security =================
+  static TextStyle font18BrownPoppins700W = TextStyle(
+    fontFamily: AppFonts.poppins,
+    fontSize: 18.sp,
+    fontWeight: FontWeight.w700,
+    color: AppColors.brownText,
+  );
+  static TextStyle font13BrownPoppins600W = TextStyle(
+    fontFamily: AppFonts.poppins,
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.brownText,
+  );
+  static TextStyle font11LightBrownPoppins700W = TextStyle(
+    fontFamily: AppFonts.poppins,
+    fontSize: 11.sp,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 0.8,
+    color: AppColors.lightBrownText,
+  );
+  static TextStyle font11GreyPoppins400W = TextStyle(
+    fontFamily: AppFonts.poppins,
+    fontSize: 11.sp,
+    fontWeight: FontWeight.w400,
+    color: AppColors.greyText,
+  );
+  static TextStyle font12PrimaryPoppins600W = TextStyle(
+    fontFamily: AppFonts.poppins,
+    fontSize: 12.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.primary,
+  );
+  static TextStyle font11SuccessPoppins600W = TextStyle(
+    fontFamily: AppFonts.poppins,
+    fontSize: 11.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.greenAlert,
+  );
+  static TextStyle font11DangerPoppins600W = TextStyle(
+    fontFamily: AppFonts.poppins,
+    fontSize: 11.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.wrongAlert,
+  );
 }
