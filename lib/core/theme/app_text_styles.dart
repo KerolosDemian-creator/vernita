@@ -11,7 +11,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w700,
     color: AppColors.oliveForest,
   );
-    static TextStyle font10LightBrownPoppins600W = TextStyle(
+  static TextStyle font10LightBrownPoppins600W = TextStyle(
     fontFamily: AppFonts.poppins,
     fontSize: 10.sp,
     fontWeight: FontWeight.w600,
@@ -34,6 +34,13 @@ class AppTextStyles {
     fontSize: 12.sp,
     fontWeight: FontWeight.w700,
     color: AppColors.brownText,
+  );
+  static TextStyle font12BrowPoppins600W = TextStyle(
+    fontFamily: AppFonts.poppins,
+    fontSize: 12.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.brownText,
+    letterSpacing: 1.4,
   );
   static TextStyle font12BrownPoppins600W = TextStyle(
     fontFamily: AppFonts.poppins,
@@ -79,12 +86,25 @@ class AppTextStyles {
     fontWeight: FontWeight.w600,
     color: AppColors.brownText,
   );
+  static TextStyle font14BrownPoppins700W = TextStyle(
+    fontFamily: AppFonts.poppins,
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w700,
+    color: AppColors.brownText,
+  );
 
   static TextStyle font15BrownPoppins700W = TextStyle(
     fontFamily: AppFonts.poppins,
     fontSize: 15.sp,
     fontWeight: FontWeight.w700,
     color: AppColors.brownText,
+  );
+
+  static TextStyle font14LightPeachPoppins400W = TextStyle(
+    fontFamily: AppFonts.poppins,
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w400,
+    color: AppColors.lightPeachText,
   );
 
   static TextStyle font16BrownPoppins400W1Height1Ov6 = TextStyle(
@@ -97,7 +117,7 @@ class AppTextStyles {
 
   static TextStyle font18BrownPoppins700W = TextStyle(
     fontFamily: AppFonts.poppins,
-    fontSize: 18.sp,
+    fontSize: 15.sp,
     fontWeight: FontWeight.w700,
     color: AppColors.brownText,
   );
@@ -110,6 +130,12 @@ class AppTextStyles {
   static TextStyle font20BrownPoppins700W = TextStyle(
     fontFamily: AppFonts.poppins,
     fontSize: 20.sp,
+    fontWeight: FontWeight.w700,
+    color: AppColors.brownText,
+  );
+  static TextStyle font22BrownPoppins700W = TextStyle(
+    fontFamily: AppFonts.poppins,
+    fontSize: 22.sp,
     fontWeight: FontWeight.w700,
     color: AppColors.brownText,
   );

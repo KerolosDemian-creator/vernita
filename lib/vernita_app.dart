@@ -27,7 +27,7 @@ class VernitaApp extends StatelessWidget {
             ),
             child: child,
           ),
-          initialRoute: Routes.main,
+          initialRoute: Routes.settings,
           onGenerateRoute: appRouter.generateRoute,
         );
       },
