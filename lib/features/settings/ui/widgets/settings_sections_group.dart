@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:vernita/core/helper/extensions.dart';
 import 'package:vernita/core/helper/spacing.dart';
-import 'package:vernita/core/theme/app_colors.dart';
+import 'package:vernita/core/routing/routes.dart';
+import 'package:vernita/core/widgets/app_switch.dart';
 import 'package:vernita/features/settings/ui/widgets/settings_item.dart';
 import 'package:vernita/features/settings/ui/widgets/settings_section.dart';
 
@@ -52,25 +54,18 @@ class SettingsSectionsGroup extends StatelessWidget {
         SettingsSection(
           sectionTitle: 'APP SETTINGS',
           children: [
-            const SettingsItem(
+            SettingsItem(
               icon: Icons.notifications_none_rounded,
               title: 'Push Notifications',
+              onTap: () => context.pushNamed(Routes.notificationSettings),
             ),
             SettingsItem(
               icon: Icons.light_mode_outlined,
               title: 'Dark Mode',
               showChevron: false,
-              trailing: Switch(
+              trailing: AppSwitch(
                 value: isDarkMode,
                 onChanged: onDarkModeChanged,
-                activeThumbColor: AppColors.white,
-                activeTrackColor: AppColors.lightPeachText,
-                inactiveThumbColor: AppColors.white,
-                inactiveTrackColor: AppColors.lightBrown.withValues(alpha: .25),
-                trackOutlineColor: const WidgetStatePropertyAll(
-                  Colors.transparent,
-                ),
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
             ),
             const SettingsItem(

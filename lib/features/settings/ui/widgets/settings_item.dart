@@ -11,6 +11,7 @@ class SettingsItem extends StatelessWidget {
     required this.title,
     this.subtitle,
     this.value,
+    this.iconBackgroundColor,
     this.trailing,
     this.showChevron = true,
     this.onTap,
@@ -19,6 +20,7 @@ class SettingsItem extends StatelessWidget {
   final IconData icon;
   final String title;
   final String? subtitle;
+  final Color? iconBackgroundColor;
   final String? value;
   final Widget? trailing;
   final bool showChevron;
@@ -35,16 +37,37 @@ class SettingsItem extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
         alignment: Alignment.center,
         child: Row(
-          crossAxisAlignment: subtitle == null
+          crossAxisAlignment: subtitle == null || iconBackgroundColor != null
               ? CrossAxisAlignment.center
               : CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: 27.h,
-              child: Center(
-                child: Icon(icon, color: AppColors.nonSelectedIcon, size: 22.r),
+            if (iconBackgroundColor == null)
+              SizedBox(
+                height: 27.h,
+                child: Center(
+                  child: Icon(
+                    icon,
+                    color: AppColors.nonSelectedIcon,
+                    size: 22.r,
+                  ),
+                ),
+              )
+            else
+              Container(
+                width: 38.r,
+                height: 38.r,
+                decoration: BoxDecoration(
+                  color: iconBackgroundColor,
+                  shape: BoxShape.circle,
+                ),
+                child: Center(
+                  child: Icon(
+                    icon,
+                    color: AppColors.nonSelectedIcon,
+                    size: 22.r,
+                  ),
+                ),
               ),
-            ),
             horizantalSpace(16),
             Expanded(
               child: Column(

@@ -9,6 +9,7 @@ import 'package:vernita/features/main/logic/bottom_nav_cubit.dart';
 import 'package:vernita/features/main/ui/main_layout.dart';
 import 'package:vernita/features/notifications/ui/notifications_screen.dart';
 import 'package:vernita/features/onboarding/ui/onboarding_screen.dart';
+import 'package:vernita/features/settings/ui/notification_settings_screen.dart';
 import 'package:vernita/features/settings/ui/settings_screen.dart';
 
 class AppRouter {
@@ -25,6 +26,10 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const NotificationsScreen());
       case Routes.settings:
         return MaterialPageRoute(builder: (_) => const SettingsScreen());
+      case Routes.notificationSettings:
+        return MaterialPageRoute(
+          builder: (_) => const NotificationSettingsScreen(),
+        );
 
       case Routes.main:
         return MaterialPageRoute(
