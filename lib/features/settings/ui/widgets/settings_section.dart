@@ -3,7 +3,6 @@ import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:vernita/core/helper/spacing.dart';
 import 'package:vernita/core/theme/app_colors.dart';
 import 'package:vernita/core/theme/app_text_styles.dart';
-import 'package:vernita/features/settings/ui/widgets/settings_item.dart';
 
 class SettingsSection extends StatelessWidget {
   const SettingsSection({
@@ -13,7 +12,7 @@ class SettingsSection extends StatelessWidget {
   });
 
   final String sectionTitle;
-  final List<SettingsItem> children;
+  final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {

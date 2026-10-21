@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:vernita/core/helper/spacing.dart';
-import 'package:vernita/features/settings/ui/widgets/settings_header.dart';
+import 'package:vernita/core/widgets/app_header.dart';
 import 'package:vernita/features/settings/ui/widgets/settings_sections_group.dart';
 
 class SettingsBody extends StatefulWidget {
@@ -22,7 +22,7 @@ class _SettingsBodyState extends State<SettingsBody> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SettingsHeader(),
+            const AppHeader(title: 'Settings'),
             verticalSpace(18),
             SettingsSectionsGroup(
               isDarkMode: _isDarkMode,
