@@ -26,7 +26,7 @@ class CvLoadingContainer extends StatelessWidget {
             height: 42.r,
             child: CircularProgressIndicator(
               strokeWidth: 3,
-              color: AppColors.lightPeachText,
+              color: AppColors.primary,
               backgroundColor: AppColors.warmPeach,
             ),
           ),

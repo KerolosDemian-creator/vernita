@@ -64,7 +64,7 @@ class AppTextStyles {
     fontFamily: AppFonts.poppins,
     fontSize: 13.sp,
     fontWeight: FontWeight.w400,
-    color: AppColors.lightPeachText,
+    color: AppColors.primary,
   );
 
   static TextStyle font13LightPeachPoppins600W = TextStyle(
@@ -157,6 +157,66 @@ class AppTextStyles {
   static TextStyle font16BrownInter600W = TextStyle(
     fontSize: 16.sp,
     fontWeight: FontWeight.w600,
+    color: AppColors.brownText,
+  );
+
+  // ================= Auth screens =================
+
+  /// Auth title (Sign In / Sign Up). Forgot password uses copyWith(fontSize: 30.sp).
+  static TextStyle font40BrownPoppins700W = TextStyle(
+    fontFamily: AppFonts.poppins,
+    fontSize: 40.sp,
+    fontWeight: FontWeight.w700,
+    height: 42.5 / 40,
+    letterSpacing: -0.85,
+    color: AppColors.brownText,
+  );
+
+  /// Auth subtitle + primary button label.
+  static TextStyle font16BrownPoppins600W = TextStyle(
+    fontFamily: AppFonts.poppins,
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.brownText,
+  );
+
+  /// Text field input.
+  static TextStyle font15BrownPoppins400W = TextStyle(
+    fontFamily: AppFonts.poppins,
+    fontSize: 15.sp,
+    fontWeight: FontWeight.w400,
+    color: AppColors.brownText,
+  );
+
+  /// Text field hint.
+  static TextStyle font15GreyPoppins400W = TextStyle(
+    fontFamily: AppFonts.poppins,
+    fontSize: 15.sp,
+    fontWeight: FontWeight.w400,
+    color: AppColors.greyText,
+  );
+
+  /// Body text ("Remember me", "Don't have an account?").
+  static TextStyle font13BrownPoppins500W = TextStyle(
+    fontFamily: AppFonts.poppins,
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.brownText,
+  );
+
+  /// Links ("Forgot password?", "Sign Up", "Terms of Service").
+  static TextStyle font13PrimaryPoppins700W = TextStyle(
+    fontFamily: AppFonts.poppins,
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w700,
+    color: AppColors.primary,
+  );
+
+  /// Tab switcher (Sign In | Sign Up).
+  static TextStyle font12BrownPoppins700W = TextStyle(
+    fontFamily: AppFonts.poppins,
+    fontSize: 12.sp,
+    fontWeight: FontWeight.w700,
     color: AppColors.brownText,
   );
 }

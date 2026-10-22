@@ -100,7 +100,7 @@ class CustomBottomNavBar extends StatelessWidget {
                   shape: BoxShape.circle,
                   border: Border.all(
                     color: isInterviewSelected
-                        ? AppColors.lightPeachText
+                        ? AppColors.primary
                         : Colors.white,
                     width: 4.r,
                   ),
@@ -159,7 +159,7 @@ class _NavItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = isSelected
-        ? AppColors.lightPeachText
+        ? AppColors.primary
         : AppColors.nonSelectedIcon;
 
     return GestureDetector(
