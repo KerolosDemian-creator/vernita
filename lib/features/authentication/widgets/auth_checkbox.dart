@@ -22,7 +22,7 @@ class AuthCheckbox extends StatelessWidget {
               ? const LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  colors: [AppColors.primary, AppColors.peach],
+                  colors: [AppColors.lightPeachText, AppColors.peach],
                 )
               : null,
           border: value

@@ -71,7 +71,7 @@ class _AvatarGraphic extends StatelessWidget {
           width: 27.r,
           height: 27.r,
           decoration: const BoxDecoration(
-            color: AppColors.primary,
+            color: AppColors.lightPeachText,
             shape: BoxShape.circle,
           ),
         ),
@@ -80,7 +80,7 @@ class _AvatarGraphic extends StatelessWidget {
           width: 52.w,
           height: 31.h,
           decoration: BoxDecoration(
-            color: AppColors.primary,
+            color: AppColors.lightPeachText,
             borderRadius: BorderRadius.all(Radius.elliptical(26.w, 18.h)),
           ),
         ),
@@ -94,7 +94,7 @@ class _LockGraphic extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Icon(Icons.lock_rounded, size: 48.r, color: AppColors.primary);
+    return Icon(Icons.lock_rounded, size: 48.r, color: AppColors.lightPeachText);
   }
 }
 
@@ -111,7 +111,7 @@ class _PlusCorner extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [AppColors.primary, AppColors.peach],
+          colors: [AppColors.lightPeachText, AppColors.peach],
         ),
       ),
       child: Icon(Icons.add_rounded, size: 15.r, color: Colors.white),

@@ -26,7 +26,7 @@ class AuthPrimaryButton extends StatelessWidget {
         gradient: const LinearGradient(
           begin: Alignment(-1, -0.3),
           end: Alignment(1, 0.3),
-          colors: [AppColors.primary, AppColors.peach],
+          colors: [AppColors.lightPeachText, AppColors.peach],
         ),
         boxShadow: const [
           BoxShadow(

@@ -18,7 +18,7 @@ class LogInHeader extends StatelessWidget {
           children: [
             TextSpan(
               text: 'Welcome back! ',
-              style: TextStyle(color: AppColors.primary),
+              style: TextStyle(color: AppColors.lightPeachText),
             ),
             const TextSpan(text: "Let's get you signed in."),
           ],

@@ -77,7 +77,7 @@ class _AuthTextFieldState extends State<AuthTextField> {
               keyboardType: widget.keyboardType,
               textInputAction: widget.textInputAction,
               obscureText: widget.isPassword && _obscure,
-              cursorColor: AppColors.primary,
+              cursorColor: AppColors.lightPeachText,
               style: AppTextStyles.font15BrownPoppins400W,
               decoration: InputDecoration(
                 isCollapsed: true,

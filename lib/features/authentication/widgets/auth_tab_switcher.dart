@@ -90,7 +90,7 @@ class _TabItem extends StatelessWidget {
           child: Text(
             label,
             style: AppTextStyles.font12BrownPoppins700W.copyWith(
-              color: isSelected ? AppColors.primary : AppColors.brownText,
+              color: isSelected ? AppColors.lightPeachText : AppColors.brownText,
             ),
           ),
         ),

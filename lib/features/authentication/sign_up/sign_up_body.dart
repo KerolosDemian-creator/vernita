@@ -53,7 +53,7 @@ class _SignUpBodyState extends State<SignUpBody> {
             title: 'Sign Up',
             subtitle: Text(
               "Let's get you started.",
-              style: AppTextStyles.subtitle(),
+              style: AppTextStyles.test,
             ),
             badge: AuthBadge.profile(),
           ),
@@ -116,17 +116,17 @@ class _SignUpBodyState extends State<SignUpBody> {
                 Expanded(
                   child: Text.rich(
                     TextSpan(
-                      style: AppTextStyles.body,
+                      style: AppTextStyles.test,
                       children: [
                         const TextSpan(text: 'I agree to the '),
                         TextSpan(
                           text: 'Terms of Service',
-                          style: AppTextStyles.link,
+                          style: AppTextStyles.test,
                         ),
                         const TextSpan(text: ' and '),
                         TextSpan(
                           text: 'Privacy Policy',
-                          style: AppTextStyles.link,
+                          style: AppTextStyles.test,
                         ),
                       ],
                     ),

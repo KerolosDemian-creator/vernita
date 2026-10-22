@@ -37,7 +37,7 @@ class UploadCvContainer extends StatelessWidget {
               ),
               child: Icon(
                 Icons.upload_file_outlined,
-                color: AppColors.primary,
+                color: AppColors.lightPeachText,
                 size: 32,
               ),
             ),

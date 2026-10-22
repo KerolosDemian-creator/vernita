@@ -104,7 +104,7 @@ class CvErrorContainer extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.insert_drive_file_outlined,
-                    color: AppColors.primary,
+                    color: AppColors.lightPeachText,
                     size: 22.r,
                   ),
                   horizantalSpace(8),

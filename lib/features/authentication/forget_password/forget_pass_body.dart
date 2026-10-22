@@ -45,7 +45,7 @@ class _ForgotPasswordBodyState extends State<ForgotPasswordBody> {
             ),
             subtitle: Text(
               "No worries! Enter your email and we'll send you a reset link.",
-              style: AppTextStyles.subtitle(size: 13),
+              style: AppTextStyles.test,
             ),
             badge: AuthBadge.lockWithQuestion(),
           ),
@@ -99,7 +99,7 @@ class _SecureCard extends StatelessWidget {
             child: Icon(
               Icons.verified_user_rounded,
               size: 19.r,
-              color: AppColors.primary,
+              color: AppColors.lightPeachText,
             ),
           ),
           SizedBox(width: 12.w),
@@ -109,7 +109,7 @@ class _SecureCard extends StatelessWidget {
               children: [
                 Text(
                   'Secure & Safe',
-                  style: AppTextStyles.subtitle(size: 13).copyWith(
+                  style: AppTextStyles.test.copyWith(
                     color: AppColors.brownText,
                     fontWeight: FontWeight.w700,
                   ),
@@ -117,7 +117,7 @@ class _SecureCard extends StatelessWidget {
                 SizedBox(height: 2.h),
                 Text(
                   "We'll never share your email with anyone else.",
-                  style: AppTextStyles.body.copyWith(fontSize: 11.sp),
+                  style: AppTextStyles.test.copyWith(fontSize: 11.sp),
                 ),
               ],
             ),

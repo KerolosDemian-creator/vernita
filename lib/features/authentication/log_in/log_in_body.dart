@@ -43,11 +43,11 @@ class _LogInBodyState extends State<LogInBody> {
             title: 'Sign In',
             subtitle: Text.rich(
               TextSpan(
-                style: AppTextStyles.subtitle(size: 14),
+                style: AppTextStyles.test,
                 children: [
                   TextSpan(
                     text: 'Welcome back! ',
-                    style: TextStyle(color: AppColors.primary),
+                    style: TextStyle(color: AppColors.lightPeachText),
                   ),
                   const TextSpan(text: "Let's get you signed in."),
                 ],
@@ -87,7 +87,7 @@ class _LogInBodyState extends State<LogInBody> {
               SizedBox(width: 10.w),
               Text(
                 'Remember me',
-                style: AppTextStyles.body.copyWith(
+                style: AppTextStyles.test.copyWith(
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -97,9 +97,9 @@ class _LogInBodyState extends State<LogInBody> {
                     Navigator.pushNamed(context, Routes.forgotPassword),
                 child: Text(
                   'Forgot password?',
-                  style: AppTextStyles.link.copyWith(
+                  style: AppTextStyles.test.copyWith(
                     decoration: TextDecoration.underline,
-                    decorationColor: AppColors.primary,
+                    decorationColor: AppColors.lightPeachText,
                   ),
                 ),
               ),
@@ -123,15 +123,15 @@ class _LogInBodyState extends State<LogInBody> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Don't have an account? ", style: AppTextStyles.body),
+              Text("Don't have an account? ", style: AppTextStyles.test),
               GestureDetector(
                 onTap: () =>
                     Navigator.pushReplacementNamed(context, Routes.signUp),
                 child: Text(
                   'Sign Up',
-                  style: AppTextStyles.link.copyWith(
+                  style: AppTextStyles.test.copyWith(
                     decoration: TextDecoration.underline,
-                    decorationColor: AppColors.primary,
+                    decorationColor: AppColors.lightPeachText,
                   ),
                 ),
               ),

@@ -18,7 +18,7 @@ class AuthLinkText extends StatelessWidget {
         label,
         style: AppTextStyles.font13PrimaryPoppins700W.copyWith(
           decoration: TextDecoration.underline,
-          decorationColor: AppColors.primary,
+          decorationColor: AppColors.lightPeachText,
         ),
       ),
     );

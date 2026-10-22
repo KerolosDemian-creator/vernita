@@ -7,7 +7,6 @@ import 'package:vernita/features/authentication/log_in/ui/log_in_screen.dart';
 import 'package:vernita/features/authentication/sign_up/ui/sign_up_screen.dart';
 import 'package:vernita/features/home/ui/home_screen.dart';
 import 'package:vernita/features/home/logic/cv_upload_cubit.dart';
-import 'package:vernita/features/home/ui/home_screen.dart';
 import 'package:vernita/features/interview/ui/interview_screen.dart';
 import 'package:vernita/features/main/logic/bottom_nav_cubit.dart';
 import 'package:vernita/features/main/ui/main_layout.dart';
@@ -32,8 +31,6 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const ForgotPasswordScreen());
 
       case Routes.home:
-        return MaterialPageRoute(builder: (_) => const HomeScreen());
-      case Routes.homeScreen:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
       case Routes.interviewSession:
         return MaterialPageRoute(builder: (_) => const InterviewScreen());

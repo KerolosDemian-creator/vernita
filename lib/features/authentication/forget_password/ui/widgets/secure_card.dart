@@ -26,7 +26,7 @@ class SecureCard extends StatelessWidget {
             child: Icon(
               Icons.verified_user_rounded,
               size: 19.r,
-              color: AppColors.primary,
+              color: AppColors.lightPeachText,
             ),
           ),
           SizedBox(width: 12.w),
