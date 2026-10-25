@@ -12,12 +12,7 @@ ApiErrorModel _$ApiErrorModelFromJson(Map<String, dynamic> json) =>
       status: (json['status'] as num).toInt(),
       error: json['error'] as String,
       message: json['message'] as String,
+      path: json['path'] as String?,
+      validationErrors: (json['validationErrors'] as Map<String, dynamic>?)
+          ?.map((k, e) => MapEntry(k, e as String)),
     );
-
-Map<String, dynamic> _$ApiErrorModelToJson(ApiErrorModel instance) =>
-    <String, dynamic>{
-      'timestamp': instance.timestamp,
-      'status': instance.status,
-      'error': instance.error,
-      'message': instance.message,
-    };
