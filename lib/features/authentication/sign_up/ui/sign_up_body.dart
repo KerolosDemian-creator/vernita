@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:vernita/core/routing/routes.dart';
-import '../../../widgets/auth_bg.dart';
-import '../../../widgets/auth_social_section.dart';
-import '../../../widgets/auth_tab_switcher.dart';
-import 'sign_up_form.dart';
-import 'sign_up_header.dart';
+import '../../widgets/auth_bg.dart';
+import '../../widgets/auth_social_section.dart';
+import '../../widgets/auth_tab_switcher.dart';
+import 'widgets/sign_up_form.dart';
+import 'widgets/sign_up_header.dart';
 
 class SignUpBody extends StatelessWidget {
   const SignUpBody({super.key});
