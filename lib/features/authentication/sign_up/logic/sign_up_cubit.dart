@@ -1,44 +1,28 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../logic/auth_rules.dart';
-import '../data/models/sign_up_request_model.dart';
-import 'sign_up_state.dart';
+import 'package:vernita/features/authentication/sign_up/data/models/sign_up_request_model.dart';
+import 'package:vernita/features/authentication/sign_up/data/repo/sign_up_repo.dart';
+import 'package:vernita/features/authentication/sign_up/logic/sign_up_state.dart';
 
 class SignUpCubit extends Cubit<SignUpState> {
-  SignUpCubit() : super(const SignUpState());
+  final SignUpRepo signUpRepo;
+  TextEditingController fullNamecontroller = TextEditingController();
+  TextEditingController emailcontroller = TextEditingController();
+  TextEditingController passwordcontroller = TextEditingController();
+  TextEditingController phonecontroller = TextEditingController();
+  TextEditingController confirmPasswordcontroller = TextEditingController();
 
-  void toggleAgreed(bool value) =>
-      emit(state.copyWith(agreed: value, status: SignUpStatus.initial));
+  final formKey = GlobalKey<FormState>();
 
-  Future<void> submit({
-    required String name,
-    required String email,
-    required String phone,
-    required String password,
-    required String confirmPassword,
-  }) async {
-    emit(state.copyWith(status: SignUpStatus.loading));
+  SignUpCubit(this.signUpRepo) : super(const SignUpState.initial());
 
-    final error = AuthRules.name(name) ??
-        AuthRules.email(email) ??
-        AuthRules.phone(phone) ??
-        AuthRules.password(password) ??
-        AuthRules.confirmPassword(confirmPassword, password) ??
-        (state.agreed ? null : 'Please agree to the Terms and Privacy Policy');
-    if (error != null) {
-      emit(state.copyWith(status: SignUpStatus.failure, errorMessage: error));
-      return;
-    }
-
-    // ignore: unused_local_variable
-    final request = SignUpRequestModel(
-      name: name.trim(),
-      email: email.trim(),
-      phone: phone.trim(),
-      password: password,
+  Future<void> emitSignUpState(SignUpRequestModel signUpBodyRequest) async {
+    emit(const SignUpState.loading());
+    final result = await signUpRepo.signUp(signUpBodyRequest);
+    result.fold(
+      (failure) =>
+          emit(SignUpState.failure(errMessage: failure.apiErrorModel.message)),
+      (user) => emit(SignUpState.success(user)),
     );
-    // TODO: call the sign-up API / repo with `request`.
-
-    emit(state.copyWith(status: SignUpStatus.success));
   }
 }

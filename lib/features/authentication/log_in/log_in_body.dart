@@ -87,9 +87,7 @@ class _LogInBodyState extends State<LogInBody> {
               SizedBox(width: 10.w),
               Text(
                 'Remember me',
-                style: AppTextStyles.test.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
+                style: AppTextStyles.test.copyWith(fontWeight: FontWeight.w600),
               ),
               const Spacer(),
               GestureDetector(
@@ -111,7 +109,7 @@ class _LogInBodyState extends State<LogInBody> {
             // TODO: connect to login logic. For now goes to Home.
             onPressed: () => Navigator.pushNamedAndRemoveUntil(
               context,
-              Routes.home,
+              Routes.main,
               (route) => false,
             ),
           ),

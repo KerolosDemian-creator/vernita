@@ -1,24 +1,12 @@
-enum SignUpStatus { initial, loading, success, failure }
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:vernita/features/authentication/sign_up/data/models/sign_up_response_model.dart';
 
-class SignUpState {
-  const SignUpState({
-    this.agreed = true,
-    this.status = SignUpStatus.initial,
-    this.errorMessage,
-  });
+part 'sign_up_state.freezed.dart';
 
-  final bool agreed;
-  final SignUpStatus status;
-  final String? errorMessage;
-
-  SignUpState copyWith({
-    bool? agreed,
-    SignUpStatus? status,
-    String? errorMessage,
-  }) =>
-      SignUpState(
-        agreed: agreed ?? this.agreed,
-        status: status ?? this.status,
-        errorMessage: errorMessage,
-      );
+@freezed
+class SignUpState with _$SignUpState {
+  const factory SignUpState.initial() = _Initial;
+  const factory SignUpState.loading() = Loading;
+  const factory SignUpState.failure({required String errMessage}) = Failure;
+  const factory SignUpState.success(SignUpResponseModel user) = Success;
 }

@@ -4,6 +4,7 @@ import 'package:vernita/core/di/dependency_injection.dart';
 import 'package:vernita/core/routing/routes.dart';
 import 'package:vernita/features/authentication/forget_password/ui/forget_pass_screen.dart';
 import 'package:vernita/features/authentication/log_in/ui/log_in_screen.dart';
+import 'package:vernita/features/authentication/sign_up/logic/sign_up_cubit.dart';
 import 'package:vernita/features/authentication/sign_up/ui/sign_up_screen.dart';
 import 'package:vernita/features/home/ui/home_screen.dart';
 import 'package:vernita/features/home/logic/cv_upload_cubit.dart';
@@ -25,12 +26,17 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const LogInScreen());
 
       case Routes.signUp:
-        return MaterialPageRoute(builder: (_) => const SignUpScreen());
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => getIt<SignUpCubit>(),
+            child: const SignUpScreen(),
+          ),
+        );
 
       case Routes.forgotPassword:
         return MaterialPageRoute(builder: (_) => const ForgotPasswordScreen());
 
-      case Routes.home:
+      case Routes.homeScreen:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
       case Routes.interviewSession:
         return MaterialPageRoute(builder: (_) => const InterviewScreen());

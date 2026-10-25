@@ -141,7 +141,7 @@ class _SignUpBodyState extends State<SignUpBody> {
             // TODO: connect to sign-up logic. For now goes to Home.
             onPressed: () => Navigator.pushNamedAndRemoveUntil(
               context,
-              Routes.home,
+              Routes.main,
               (route) => false,
             ),
           ),

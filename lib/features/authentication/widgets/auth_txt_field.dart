@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'auth_text_field.dart';
 
 /// Email field used in Log in / Sign up / Forgot password.
-class AuthEmailField extends StatelessWidget {
-  const AuthEmailField({
+class AuthTxtField extends StatelessWidget {
+  const AuthTxtField({
     super.key,
     required this.controller,
     this.textInputAction = TextInputAction.next,
