@@ -5,7 +5,6 @@ import 'package:vernita/vernita_app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await getItSetup();
   runApp(VernitaApp(appRouter: AppRouter()));
 }

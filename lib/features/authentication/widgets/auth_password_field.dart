@@ -9,9 +9,11 @@ class AuthPasswordField extends StatelessWidget {
     required this.controller,
     this.hint = 'Password',
     this.textInputAction = TextInputAction.next,
+    required this.validator,
   });
 
   final TextEditingController controller;
+  final Function(String?) validator;
   final String hint;
   final TextInputAction textInputAction;
 

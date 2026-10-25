@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
+import 'package:vernita/features/authentication/widgets/auth_text_field.dart';
 
-import '../../../widgets/auth_email_field.dart';
 import '../../../widgets/auth_primary_button.dart';
 import '../../logic/forget_pass_cubit.dart';
 import '../../logic/forget_pass_state.dart';
 
-/// Email field + "Send Reset Link" button.
 class ForgetPassForm extends StatefulWidget {
   const ForgetPassForm({super.key});
 
@@ -29,8 +28,11 @@ class _ForgetPassFormState extends State<ForgetPassForm> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        AuthEmailField(
+        AuthTextField(
+          hint: 'Email address',
+          icon: Icons.mail_outline_rounded,
           controller: _emailController,
+          keyboardType: TextInputType.emailAddress,
           textInputAction: TextInputAction.done,
         ),
         SizedBox(height: 8.h),
@@ -40,9 +42,9 @@ class _ForgetPassFormState extends State<ForgetPassForm> {
             label: 'Send Reset Link',
             onPressed: state.status == ForgetPassStatus.loading
                 ? null
-                : () => context
-                    .read<ForgetPassCubit>()
-                    .sendResetLink(_emailController.text),
+                : () => context.read<ForgetPassCubit>().sendResetLink(
+                    _emailController.text,
+                  ),
           ),
         ),
       ],

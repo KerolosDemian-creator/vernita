@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 
 import 'package:vernita/core/routing/routes.dart';
-import '../../../widgets/auth_email_field.dart';
+import 'package:vernita/features/authentication/widgets/auth_text_field.dart';
 import '../../../widgets/auth_password_field.dart';
 import '../../logic/log_in_cubit.dart';
 import '../../logic/log_in_state.dart';
@@ -34,11 +34,18 @@ class _LogInFormState extends State<LogInForm> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        AuthEmailField(controller: _emailController),
+        AuthTextField(
+          hint: 'Email address',
+          icon: Icons.mail_outline_rounded,
+          controller: _emailController,
+          keyboardType: TextInputType.emailAddress,
+          textInputAction: TextInputAction.next,
+        ),
         SizedBox(height: 8.h),
         AuthPasswordField(
           controller: _passwordController,
           textInputAction: TextInputAction.done,
+          validator: (String? p1) {},
         ),
         SizedBox(height: 14.h),
         BlocBuilder<LogInCubit, LogInState>(

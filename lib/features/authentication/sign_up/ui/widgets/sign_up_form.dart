@@ -1,90 +1,128 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
-
-import '../../../widgets/auth_email_field.dart';
-import '../../../widgets/auth_password_field.dart';
+import 'package:vernita/core/helper/app_regex.dart';
+import 'package:vernita/features/authentication/sign_up/data/models/sign_up_request_model.dart';
+import 'package:vernita/features/authentication/sign_up/logic/sign_up_cubit.dart';
+import 'package:vernita/features/authentication/sign_up/ui/widgets/sign_up_listener.dart';
 import '../../../widgets/auth_text_field.dart';
-import '../../logic/sign_up_cubit.dart';
-import '../../logic/sign_up_state.dart';
 import 'sign_up_submit_button.dart';
-import 'terms_agreement_row.dart';
 
-/// All sign-up fields + terms checkbox + create account button.
-class SignUpForm extends StatefulWidget {
+class SignUpForm extends StatelessWidget {
   const SignUpForm({super.key});
 
   @override
-  State<SignUpForm> createState() => _SignUpFormState();
-}
-
-class _SignUpFormState extends State<SignUpForm> {
-  final _nameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _phoneController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _emailController.dispose();
-    _phoneController.dispose();
-    _passwordController.dispose();
-    _confirmPasswordController.dispose();
-    super.dispose();
+  Widget build(BuildContext context) {
+    final cubit = context.read<SignUpCubit>();
+    return Form(
+      key: cubit.formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          AuthTextField(
+            hint: 'Full name',
+            icon: Icons.person_outline_rounded,
+            keyboardType: TextInputType.name,
+            textInputAction: TextInputAction.next,
+            controller: cubit.fullNamecontroller,
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return 'Please enter your name';
+              }
+              return null;
+            },
+          ),
+          SizedBox(height: 8.h),
+          AuthTextField(
+            hint: 'Email address',
+            icon: Icons.mail_outline_rounded,
+            keyboardType: TextInputType.emailAddress,
+            textInputAction: TextInputAction.next,
+            controller: cubit.emailcontroller,
+            validator: (value) {
+              if (value == null ||
+                  value.trim().isEmpty ||
+                  !AppRegex.isEmailValid(value.trim())) {
+                return 'Please enter a valid email';
+              }
+              return null;
+            },
+          ),
+          SizedBox(height: 8.h),
+          AuthTextField(
+            hint: 'Phone number',
+            icon: Icons.phone_outlined,
+            keyboardType: TextInputType.phone,
+            textInputAction: TextInputAction.next,
+            controller: cubit.phonecontroller,
+            validator: (value) {
+              if (value == null ||
+                  value.trim().isEmpty ||
+                  !AppRegex.isPhoneNumberValid(value.trim())) {
+                return 'Please enter a valid phone number';
+              }
+              return null;
+            },
+          ),
+          SizedBox(height: 8.h),
+          AuthTextField(
+            isPassword: true,
+            hint: 'Enter your password',
+            icon: Icons.lock_outline_rounded,
+            controller: cubit.passwordcontroller,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your password';
+              }
+              return null;
+            },
+          ),
+          SizedBox(height: 8.h),
+          AuthTextField(
+            isPassword: true,
+            hint: 'Confirm password',
+            textInputAction: TextInputAction.done,
+            icon: Icons.lock_outline_rounded,
+            controller: cubit.confirmPasswordcontroller,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please confirm your password';
+              }
+              if (value != cubit.passwordcontroller.text) {
+                return 'Passwords do not match';
+              }
+              return null;
+            },
+          ),
+          SizedBox(height: 16.h),
+          SignUpSubmitButton(
+            onPressed: () {
+              validateThenDoSignUp(context);
+            },
+            nameController: cubit.fullNamecontroller,
+            emailController: cubit.emailcontroller,
+            phoneController: cubit.phonecontroller,
+            passwordController: cubit.passwordcontroller,
+            confirmPasswordController: cubit.confirmPasswordcontroller,
+          ),
+          SignUpListener(),
+        ],
+      ),
+    );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        AuthTextField(
-          hint: 'Full name',
-          icon: Icons.person_outline_rounded,
-          controller: _nameController,
-          keyboardType: TextInputType.name,
-          textInputAction: TextInputAction.next,
+  void validateThenDoSignUp(BuildContext context) {
+    final signUpCubit = context.read<SignUpCubit>();
+
+    if (signUpCubit.formKey.currentState!.validate()) {
+      signUpCubit.emitSignUpState(
+        SignUpRequestModel(
+          name: signUpCubit.fullNamecontroller.text,
+          email: signUpCubit.emailcontroller.text,
+          phone: signUpCubit.phonecontroller.text,
+          password: signUpCubit.passwordcontroller.text,
         ),
-        SizedBox(height: 8.h),
-        AuthEmailField(controller: _emailController),
-        SizedBox(height: 8.h),
-        AuthTextField(
-          hint: 'Phone number',
-          icon: Icons.phone_outlined,
-          controller: _phoneController,
-          keyboardType: TextInputType.phone,
-          textInputAction: TextInputAction.next,
-        ),
-        SizedBox(height: 8.h),
-        AuthPasswordField(
-          controller: _passwordController,
-          hint: 'Create password',
-        ),
-        SizedBox(height: 8.h),
-        AuthPasswordField(
-          controller: _confirmPasswordController,
-          hint: 'Confirm password',
-          textInputAction: TextInputAction.done,
-        ),
-        SizedBox(height: 8.h),
-        BlocBuilder<SignUpCubit, SignUpState>(
-          buildWhen: (p, c) => p.agreed != c.agreed,
-          builder: (context, state) => TermsAgreementRow(
-            agreed: state.agreed,
-            onChanged: context.read<SignUpCubit>().toggleAgreed,
-          ),
-        ),
-        SizedBox(height: 8.h),
-        SignUpSubmitButton(
-          nameController: _nameController,
-          emailController: _emailController,
-          phoneController: _phoneController,
-          passwordController: _passwordController,
-          confirmPasswordController: _confirmPasswordController,
-        ),
-      ],
-    );
+      );
+    }
   }
 }
