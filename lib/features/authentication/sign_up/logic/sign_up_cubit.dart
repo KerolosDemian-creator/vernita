@@ -20,8 +20,9 @@ class SignUpCubit extends Cubit<SignUpState> {
     emit(const SignUpState.loading());
     final result = await signUpRepo.signUp(signUpBodyRequest);
     result.fold(
-      (failure) =>
-          emit(SignUpState.failure(errMessage: failure.apiErrorModel.message)),
+      (failure) => emit(
+        SignUpState.failure(errMessage: failure.apiErrorModel.displayMessage),
+      ),
       (user) => emit(SignUpState.success(user)),
     );
   }
