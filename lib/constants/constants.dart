@@ -30,6 +30,9 @@ class AppSvgs {
       'lib/core/utils/Svgs/feature_icon.svg';
   static const String avatarAvailableIcon =
       'lib/core/utils/Svgs/avatar_available_icon.svg';
+
+  // Signup Screen
+  static const String googleIcon = 'lib/core/utils/Svgs/google_svg_icon.svg';
 }
 
 class AppImages {

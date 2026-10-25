@@ -86,7 +86,6 @@ class _SecureCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.h),
-      decoration: authCardDecoration(),
       child: Row(
         children: [
           Container(

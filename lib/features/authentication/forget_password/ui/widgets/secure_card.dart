@@ -3,7 +3,6 @@ import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 
 import 'package:vernita/core/theme/app_colors.dart';
 import 'package:vernita/core/theme/app_text_styles.dart';
-import '../../../widgets/auth_text_field.dart'; // authCardDecoration()
 
 /// "Secure & Safe" info card.
 class SecureCard extends StatelessWidget {
@@ -13,7 +12,6 @@ class SecureCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.h),
-      decoration: authCardDecoration(),
       child: Row(
         children: [
           Container(
