@@ -24,7 +24,7 @@ class ForgetPassHeader extends StatelessWidget {
         ),
       ),
       subtitle: Text(
-        "No worries! Enter your email and we'll send you a reset link.",
+        "No worries! Enter your email and we'll send you a reset code.",
         style: AppTextStyles.font14BrownPoppins600W.copyWith(fontSize: 13.sp),
       ),
       badge: AuthBadge.lockWithQuestion(),

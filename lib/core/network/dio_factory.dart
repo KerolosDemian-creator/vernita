@@ -17,8 +17,7 @@ class DioFactory {
 
     if (kDebugMode) {
       dio.interceptors.add(
-        // Auth payloads contain credentials and access tokens. Never log
-        // their bodies; the error logger bypasses the responseBody flag.
+        
         PrettyDioLogger(
           requestHeader: false,
           requestBody: false,

@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vernita/core/di/dependency_injection.dart';
 import 'package:vernita/core/routing/routes.dart';
+import 'package:vernita/features/authentication/forget_password/logic/forget_pass_cubit.dart';
 import 'package:vernita/features/authentication/forget_password/ui/forget_pass_screen.dart';
 import 'package:vernita/features/authentication/log_in/logic/log_in_cubit.dart';
 import 'package:vernita/features/authentication/log_in/ui/log_in_screen.dart';
+import 'package:vernita/features/authentication/reset_password/logic/reset_pass_cubit.dart';
+import 'package:vernita/features/authentication/reset_password/ui/reset_pass_screen.dart';
 import 'package:vernita/features/authentication/sign_up/logic/sign_up_cubit.dart';
 import 'package:vernita/features/authentication/sign_up/ui/sign_up_screen.dart';
 import 'package:vernita/features/home/ui/home_screen.dart';
@@ -40,7 +43,24 @@ class AppRouter {
         );
 
       case Routes.forgotPassword:
-        return MaterialPageRoute(builder: (_) => const ForgotPasswordScreen());
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (_) => getIt<ForgetPassCubit>(),
+            child: const ForgotPasswordScreen(),
+          ),
+        );
+
+      case Routes.resetPassword:
+        final email = settings.arguments is String
+            ? settings.arguments as String
+            : '';
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (_) =>
+                getIt<ResetPassCubit>()..emailController.text = email,
+            child: const ResetPasswordScreen(),
+          ),
+        );
 
       case Routes.homeScreen:
         return MaterialPageRoute(builder: (_) => const HomeScreen());

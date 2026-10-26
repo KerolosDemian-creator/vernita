@@ -2,8 +2,11 @@ import 'package:dio/dio.dart';
 
 import 'package:retrofit/retrofit.dart';
 import 'package:vernita/core/network/api_constants.dart';
+import 'package:vernita/core/network/models/message_response_model.dart';
+import 'package:vernita/features/authentication/forget_password/data/models/forget_pass_request_model.dart';
 import 'package:vernita/features/authentication/log_in/data/models/log_in_request_model.dart';
 import 'package:vernita/features/authentication/log_in/data/models/log_in_response_model.dart';
+import 'package:vernita/features/authentication/reset_password/data/models/reset_pass_request_model.dart';
 import 'package:vernita/features/authentication/sign_up/data/models/sign_up_request_model.dart';
 import 'package:vernita/features/authentication/sign_up/data/models/sign_up_response_model.dart';
 part 'api_service.g.dart';
@@ -19,4 +22,14 @@ abstract class ApiService {
 
   @POST(ApiEndPoints.login)
   Future<LogInResponseModel> logIn(@Body() LogInRequestModel logInRequestBody);
+
+  @POST(ApiEndPoints.forgotPassword)
+  Future<MessageResponseModel> forgotPassword(
+    @Body() ForgetPassRequestModel forgetPassRequestBody,
+  );
+
+  @POST(ApiEndPoints.resetPassword)
+  Future<MessageResponseModel> resetPassword(
+    @Body() ResetPassRequestModel resetPassRequestBody,
+  );
 }

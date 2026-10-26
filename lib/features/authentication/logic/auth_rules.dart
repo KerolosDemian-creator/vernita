@@ -30,6 +30,24 @@ class AuthRules {
     return null;
   }
 
-  static String? confirmPassword(String value, String original) =>
-      value != original ? 'Passwords do not match' : null;
+  /// The backend reset endpoint accepts passwords between 8 and 100 chars.
+  static String? resetPassword(String value) {
+    final error = password(value);
+    if (error != null) return error;
+    if (value.length > 100) return 'Password must be 100 characters or fewer';
+    return null;
+  }
+
+  static String? resetCode(String value) {
+    final v = value.trim();
+    if (v.isEmpty) return 'Please enter the reset code';
+    if (!RegExp(r'^\d{6}$').hasMatch(v)) return 'Reset code must be 6 digits';
+    return null;
+  }
+
+  static String? confirmPassword(String value, String original) {
+    if (value.isEmpty) return 'Please confirm your password';
+    if (value != original) return 'Passwords do not match';
+    return null;
+  }
 }
