@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
+import 'package:vernita/core/errors/api_error_handler.dart';
+import 'package:vernita/core/helper/extensions.dart';
+import 'package:vernita/core/routing/routes.dart';
+import 'package:vernita/features/authentication/widgets/auth_bg.dart';
+import 'package:vernita/features/authentication/widgets/auth_error_dialog.dart';
+import 'package:vernita/features/authentication/widgets/auth_loading_dialog.dart';
 
-import '../../../widgets/auth_bg.dart';
-import '../../../widgets/auth_snack_bar.dart';
 import '../../logic/forget_pass_cubit.dart';
 import '../../logic/forget_pass_state.dart';
 import 'forget_pass_footer.dart';
@@ -17,11 +21,36 @@ class ForgotPasswordBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<ForgetPassCubit, ForgetPassState>(
-      listenWhen: (p, c) => p.status != c.status,
+      listenWhen: (previous, current) =>
+          previous.status != current.status &&
+          (current.status == ForgetPassStatus.loading ||
+              current.status == ForgetPassStatus.failure ||
+              current.status == ForgetPassStatus.success),
       listener: (context, state) {
-        if (state.status == ForgetPassStatus.success ||
-            state.status == ForgetPassStatus.failure) {
-          showAuthSnackBar(context, state.message ?? 'Something went wrong');
+        switch (state.status) {
+          case ForgetPassStatus.loading:
+            showAuthLoadingDialog(context);
+          case ForgetPassStatus.failure:
+            context.pop();
+            showDialog(
+              context: context,
+              builder: (_) => AuthErrorDialog(
+                title: 'Reset Request Failed',
+                message: state.message ?? defaultErrorMessage,
+              ),
+            );
+          case ForgetPassStatus.success:
+            context.pop();
+            final email =
+                state.email ??
+                context.read<ForgetPassCubit>().emailController.text.trim();
+            Navigator.pushNamed(
+              context,
+              Routes.resetPassword,
+              arguments: email,
+            );
+          case ForgetPassStatus.initial:
+            break;
         }
       },
       child: AuthBackground(

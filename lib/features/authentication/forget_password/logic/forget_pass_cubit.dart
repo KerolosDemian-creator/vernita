@@ -1,28 +1,48 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../logic/auth_rules.dart';
 import '../data/models/forget_pass_request_model.dart';
+import '../data/repo/forget_pass_repo.dart';
 import 'forget_pass_state.dart';
 
 class ForgetPassCubit extends Cubit<ForgetPassState> {
-  ForgetPassCubit() : super(const ForgetPassState());
+  final ForgetPassRepo forgetPassRepo;
+  final formKey = GlobalKey<FormState>();
+  final emailController = TextEditingController();
 
-  Future<void> sendResetLink(String email) async {
+  ForgetPassCubit(this.forgetPassRepo) : super(const ForgetPassState());
+
+  Future<void> sendResetCode() async {
+    final email = emailController.text.trim();
+
     emit(state.copyWith(status: ForgetPassStatus.loading));
+    final result = await forgetPassRepo.forgotPassword(
+      ForgetPassRequestModel(email: email),
+    );
 
-    final error = AuthRules.email(email);
-    if (error != null) {
-      emit(state.copyWith(status: ForgetPassStatus.failure, message: error));
-      return;
-    }
+    await result.fold(
+      (failure) async {
+        emit(
+          state.copyWith(
+            status: ForgetPassStatus.failure,
+            message: failure.apiErrorModel.displayMessage,
+          ),
+        );
+      },
+      (response) async {
+        emit(
+          state.copyWith(
+            status: ForgetPassStatus.success,
+            message: response.message,
+            email: email,
+          ),
+        );
+      },
+    );
+  }
 
-    // ignore: unused_local_variable
-    final request = ForgetPassRequestModel(email: email.trim());
-    // TODO: call the reset-password API / repo with `request`.
-
-    emit(state.copyWith(
-      status: ForgetPassStatus.success,
-      message: 'Reset link sent! Check your email.',
-    ));
+  @override
+  Future<void> close() {
+    emailController.dispose();
+    return super.close();
   }
 }
