@@ -17,11 +17,14 @@ class DioFactory {
 
     if (kDebugMode) {
       dio.interceptors.add(
+        // Auth payloads contain credentials and access tokens. Never log
+        // their bodies; the error logger bypasses the responseBody flag.
         PrettyDioLogger(
-          requestHeader: true,
-          requestBody: true,
+          requestHeader: false,
+          requestBody: false,
           responseHeader: false,
-          responseBody: true,
+          responseBody: false,
+          error: false,
         ),
       );
     }

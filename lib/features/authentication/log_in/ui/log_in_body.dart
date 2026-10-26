@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:vernita/core/routing/routes.dart';
-import '../../../widgets/auth_bg.dart';
-import '../../../widgets/auth_social_section.dart';
-import '../../../widgets/auth_switch_prompt.dart';
-import '../../../widgets/auth_tab_switcher.dart';
-import 'log_in_form.dart';
-import 'log_in_header.dart';
+import '../../widgets/auth_bg.dart';
+import '../../widgets/auth_social_section.dart';
+import '../../widgets/auth_switch_prompt.dart';
+import '../../widgets/auth_tab_switcher.dart';
+import 'widgets/log_in_form.dart';
+import 'widgets/log_in_header.dart';
 
 class LogInBody extends StatelessWidget {
   const LogInBody({super.key});
