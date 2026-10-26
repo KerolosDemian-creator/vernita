@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vernita/core/di/dependency_injection.dart';
 import 'package:vernita/core/routing/routes.dart';
 import 'package:vernita/features/authentication/forget_password/ui/forget_pass_screen.dart';
+import 'package:vernita/features/authentication/log_in/logic/log_in_cubit.dart';
 import 'package:vernita/features/authentication/log_in/ui/log_in_screen.dart';
 import 'package:vernita/features/authentication/sign_up/logic/sign_up_cubit.dart';
 import 'package:vernita/features/authentication/sign_up/ui/sign_up_screen.dart';
@@ -23,7 +24,12 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const OnboardingScreen());
 
       case Routes.logIn:
-        return MaterialPageRoute(builder: (_) => const LogInScreen());
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (_) => getIt<LogInCubit>(),
+            child: const LogInScreen(),
+          ),
+        );
 
       case Routes.signUp:
         return MaterialPageRoute(

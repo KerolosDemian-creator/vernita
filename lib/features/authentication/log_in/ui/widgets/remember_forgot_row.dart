@@ -5,7 +5,6 @@ import 'package:vernita/core/theme/app_text_styles.dart';
 import '../../../widgets/auth_checkbox.dart';
 import '../../../widgets/auth_link_text.dart';
 
-/// "Remember me" checkbox + "Forgot password?" link.
 class RememberForgotRow extends StatelessWidget {
   const RememberForgotRow({
     super.key,

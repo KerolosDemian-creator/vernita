@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vernita/core/helper/extensions.dart';
 import 'package:vernita/core/routing/routes.dart';
 import 'package:vernita/core/theme/app_colors.dart';
-import 'package:vernita/core/theme/app_text_styles.dart';
 import 'package:vernita/features/authentication/sign_up/logic/sign_up_cubit.dart';
 import 'package:vernita/features/authentication/sign_up/logic/sign_up_state.dart';
+import 'package:vernita/features/authentication/widgets/auth_error_dialog.dart';
 
 class SignUpListener extends StatelessWidget {
   const SignUpListener({super.key});
@@ -44,22 +44,8 @@ class SignUpListener extends StatelessWidget {
     context.pop();
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        icon: const Icon(Icons.error, color: Colors.red, size: 32),
-        content: Text(
-          errMessage,
-          style: AppTextStyles.font10LightBrownPoppins600W,
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => context.pop(),
-            child: Text(
-              'Got it',
-              style: AppTextStyles.font10LightBrownPoppins600W,
-            ),
-          ),
-        ],
-      ),
+      builder: (_) =>
+          AuthErrorDialog(title: 'Sign Up Failed', message: errMessage),
     );
   }
 }
