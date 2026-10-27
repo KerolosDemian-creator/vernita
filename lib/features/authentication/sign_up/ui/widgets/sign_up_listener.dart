@@ -32,7 +32,12 @@ class SignUpListener extends StatelessWidget {
           },
           success: (user) {
             context.pop();
-            context.pushReplacementNamed(Routes.main);
+            // Registration does not create an authenticated session: the
+            // backend returns no access token, so the user must sign in.
+            context.pushNamedAndRemoveUntil(
+              Routes.logIn,
+              predicate: (_) => false,
+            );
           },
         );
       },
