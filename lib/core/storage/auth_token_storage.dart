@@ -1,37 +1,113 @@
-import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
+import 'package:vernita/core/helper/shared_pref_helper.dart';
+
+/// Persists and restores the authentication access token.
+///
+/// The token is kept in memory for the current app session. It is only written
+/// to SharedPreferences when "Remember me" is enabled, preserving the existing
+/// login behavior.
 class AuthTokenStorage {
-  static const String _accessTokenKey = 'auth_access_token';
-
   String? _cachedAccessToken;
 
   Future<void> saveToken({
     required String accessToken,
     required bool rememberMe,
   }) async {
-    _cachedAccessToken = accessToken;
-
-    final preferences = await SharedPreferences.getInstance();
-    if (rememberMe) {
-      await preferences.setString(_accessTokenKey, accessToken);
-    } else {
-      await preferences.remove(_accessTokenKey);
+    final normalizedToken = accessToken.trim();
+    if (normalizedToken.isEmpty) {
+      throw ArgumentError.value(
+        accessToken,
+        'accessToken',
+        'The access token cannot be empty.',
+      );
     }
+
+    if (rememberMe) {
+      final saved = await SharedPrefHelper.setData(
+        SharedPrefKeys.userToken,
+        normalizedToken,
+      );
+      if (!saved) {
+        throw StateError('Could not persist the authentication token.');
+      }
+    } else {
+      await SharedPrefHelper.removeData(SharedPrefKeys.userToken);
+      final persistedToken = (await SharedPrefHelper.getString(
+        SharedPrefKeys.userToken,
+      )).trim();
+      if (persistedToken.isNotEmpty) {
+        throw StateError('Could not clear the persisted authentication token.');
+      }
+    }
+
+    _cachedAccessToken = normalizedToken;
   }
 
   Future<String?> readToken() async {
     final cachedToken = _cachedAccessToken;
     if (cachedToken != null) return cachedToken;
 
-    final preferences = await SharedPreferences.getInstance();
-    _cachedAccessToken = preferences.getString(_accessTokenKey);
-    return _cachedAccessToken;
+    final storedToken = (await SharedPrefHelper.getString(
+      SharedPrefKeys.userToken,
+    )).trim();
+    if (storedToken.isEmpty) return null;
+
+    _cachedAccessToken = storedToken;
+    return storedToken;
+  }
+
+  /// Returns whether [token] can be used for a new authenticated request.
+  ///
+  /// The backend issues JWTs with an `exp` claim. If that claim is present and
+  /// already in the past, the token is known to be unusable and should not
+  /// restore an authenticated session. Opaque/non-JWT values are treated as
+  /// usable based on presence alone.
+  bool isTokenUsable(String token) {
+    if (token.trim().isEmpty) return false;
+
+    final expiration = _extractExpiration(token);
+    if (expiration == null) return true;
+
+    return expiration.isAfter(DateTime.now().toUtc());
+  }
+
+  Future<bool> hasUsableToken() async {
+    final token = await readToken();
+    return token != null && isTokenUsable(token);
   }
 
   Future<void> clearToken() async {
+    await SharedPrefHelper.removeData(SharedPrefKeys.userToken);
+    final persistedToken = (await SharedPrefHelper.getString(
+      SharedPrefKeys.userToken,
+    )).trim();
+    if (persistedToken.isNotEmpty) {
+      throw StateError('Could not clear the persisted authentication token.');
+    }
     _cachedAccessToken = null;
+  }
 
-    final preferences = await SharedPreferences.getInstance();
-    await preferences.remove(_accessTokenKey);
+  DateTime? _extractExpiration(String token) {
+    final parts = token.split('.');
+    if (parts.length != 3) return null;
+
+    try {
+      final payload = jsonDecode(
+        utf8.decode(base64Url.decode(base64Url.normalize(parts[1]))),
+      );
+      if (payload is! Map<String, dynamic>) return null;
+
+      final expiration = payload['exp'];
+      if (expiration is! num) return null;
+
+      return DateTime.fromMillisecondsSinceEpoch(
+        (expiration * 1000).round(),
+        isUtc: true,
+      );
+    } on Object {
+      // A malformed payload is not proof that the token has expired.
+      return null;
+    }
   }
 }

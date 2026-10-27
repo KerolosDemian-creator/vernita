@@ -35,7 +35,10 @@ class LogInListener extends StatelessWidget {
             setupErrorState(context, state.errorMessage ?? defaultErrorMessage);
           case LogInStatus.success:
             context.pop();
-            context.pushReplacementNamed(Routes.main);
+            context.pushNamedAndRemoveUntil(
+              Routes.main,
+              predicate: (_) => false,
+            );
           case LogInStatus.initial:
             break;
         }

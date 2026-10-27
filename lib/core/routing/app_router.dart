@@ -21,6 +21,20 @@ import 'package:vernita/features/settings/ui/notification_settings_screen.dart';
 import 'package:vernita/features/settings/ui/settings_screen.dart';
 
 class AppRouter {
+  AppRouter({GlobalKey<NavigatorState>? navigatorKey})
+    : navigatorKey = navigatorKey ?? GlobalKey<NavigatorState>();
+
+  final GlobalKey<NavigatorState> navigatorKey;
+
+  /// Clears the navigation stack and returns to the login screen after a
+  /// logout or a protected-request authentication failure.
+  void goToLogin() {
+    navigatorKey.currentState?.pushNamedAndRemoveUntil(
+      Routes.logIn,
+      (route) => false,
+    );
+  }
+
   Route generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.onboarding:

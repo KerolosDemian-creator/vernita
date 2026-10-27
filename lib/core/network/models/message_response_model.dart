@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-
 part 'message_response_model.g.dart';
 
 @JsonSerializable(createToJson: false)

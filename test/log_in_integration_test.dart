@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vernita/core/errors/api_error_handler.dart';
 import 'package:vernita/core/storage/auth_token_storage.dart';
 import 'package:vernita/features/authentication/logic/auth_rules.dart';
+import 'package:vernita/features/authentication/logic/auth_session_cubit.dart';
 import 'package:vernita/features/authentication/log_in/data/models/log_in_request_model.dart';
 import 'package:vernita/features/authentication/log_in/data/models/log_in_response_model.dart';
 import 'package:vernita/features/authentication/log_in/data/repo/log_in_repo.dart';
@@ -102,7 +103,10 @@ void main() {
 
   test('successful login stores the token and emits success', () async {
     final repo = _FakeLogInRepo(right(_response()));
-    final cubit = LogInCubit(repo, AuthTokenStorage());
+    final storage = AuthTokenStorage();
+    final session = AuthSessionCubit(storage);
+    final cubit = LogInCubit(repo, session);
+    addTearDown(cubit.close);
 
     cubit.emailController.text = '  user@example.com  ';
     cubit.passwordController.text = 'password123';
@@ -112,12 +116,14 @@ void main() {
     expect(cubit.state.response?.accessToken, 'test-access-token');
     expect(repo.lastRequest?.email, 'user@example.com');
     expect(repo.lastRequest?.rememberMe, isTrue);
+    expect(session.isLoggedInUser, isTrue);
     expect(await AuthTokenStorage().readToken(), 'test-access-token');
   });
 
   test('submit emits loading until the API responds', () async {
     final repo = _PendingLogInRepo();
-    final cubit = LogInCubit(repo, AuthTokenStorage());
+    final cubit = LogInCubit(repo, AuthSessionCubit(AuthTokenStorage()));
+    addTearDown(cubit.close);
 
     cubit.emailController.text = 'user@example.com';
     cubit.passwordController.text = 'password123';
@@ -132,7 +138,9 @@ void main() {
 
   test('remember me disabled login does not persist the token', () async {
     final repo = _FakeLogInRepo(right(_response()));
-    final cubit = LogInCubit(repo, AuthTokenStorage());
+    final session = AuthSessionCubit(AuthTokenStorage());
+    final cubit = LogInCubit(repo, session);
+    addTearDown(cubit.close);
     cubit.toggleRememberMe(false);
 
     cubit.emailController.text = 'user@example.com';
@@ -141,6 +149,7 @@ void main() {
 
     expect(cubit.state.status, LogInStatus.success);
     expect(repo.lastRequest?.rememberMe, isFalse);
+    expect(session.isLoggedInUser, isTrue);
     expect(await AuthTokenStorage().readToken(), isNull);
   });
 
@@ -148,7 +157,9 @@ void main() {
     final repo = _FakeLogInRepo(
       left(ErrorHandler.local('Invalid email or password')),
     );
-    final cubit = LogInCubit(repo, AuthTokenStorage());
+    final session = AuthSessionCubit(AuthTokenStorage());
+    final cubit = LogInCubit(repo, session);
+    addTearDown(cubit.close);
 
     cubit.emailController.text = 'user@example.com';
     cubit.passwordController.text = 'wrong-password';
@@ -156,5 +167,6 @@ void main() {
 
     expect(cubit.state.status, LogInStatus.failure);
     expect(cubit.state.errorMessage, 'Invalid email or password');
+    expect(session.isLoggedInUser, isFalse);
   });
 }

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vernita/core/helper/extensions.dart';
 import 'package:vernita/core/helper/spacing.dart';
 import 'package:vernita/core/routing/routes.dart';
 import 'package:vernita/core/widgets/app_switch.dart';
+import 'package:vernita/features/authentication/logic/auth_session_cubit.dart';
+import 'package:vernita/features/authentication/widgets/auth_snack_bar.dart';
 import 'package:vernita/features/settings/ui/widgets/settings_item.dart';
 import 'package:vernita/features/settings/ui/widgets/settings_section.dart';
 
@@ -16,21 +19,37 @@ class SettingsSectionsGroup extends StatelessWidget {
   final bool isDarkMode;
   final ValueChanged<bool> onDarkModeChanged;
 
+  Future<void> _logOut(BuildContext context) async {
+    try {
+      await context.read<AuthSessionCubit>().logout();
+    } on Object {
+      if (context.mounted) {
+        showAuthSnackBar(context, 'Could not log out. Please try again.');
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SettingsSection(
+        SettingsSection(
           sectionTitle: 'ACCOUNT',
           children: [
-            SettingsItem(
+            const SettingsItem(
               icon: Icons.person_outline_rounded,
               title: 'Personal Information',
             ),
-            SettingsItem(
+            const SettingsItem(
               icon: Icons.shield_outlined,
               title: 'Password & Security',
+            ),
+            SettingsItem(
+              icon: Icons.logout_rounded,
+              title: 'Log Out',
+              showChevron: false,
+              onTap: () => _logOut(context),
             ),
           ],
         ),
