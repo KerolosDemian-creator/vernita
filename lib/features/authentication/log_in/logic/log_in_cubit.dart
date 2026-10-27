@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vernita/core/network/dio_factory.dart';
 import 'package:vernita/features/authentication/logic/auth_session_cubit.dart';
 import 'package:vernita/features/authentication/log_in/data/models/log_in_request_model.dart';
 import 'package:vernita/features/authentication/log_in/data/repo/log_in_repo.dart';
@@ -38,8 +39,8 @@ class LogInCubit extends Cubit<LogInState> {
       },
       (response) async {
         try {
-          await authSessionCubit.startSession(
-            accessToken: response.accessToken,
+          await saveUserToken(
+            response.accessToken,
             rememberMe: request.rememberMe,
           );
           emit(state.copyWith(status: LogInStatus.success, response: response));
@@ -53,6 +54,16 @@ class LogInCubit extends Cubit<LogInState> {
         }
       },
     );
+  }
+
+  /// Persists the token through the centralized session storage and makes it
+  /// available immediately for authenticated requests.
+  Future<void> saveUserToken(String token, {bool? rememberMe}) async {
+    await authSessionCubit.startSession(
+      accessToken: token,
+      rememberMe: rememberMe ?? state.rememberMe,
+    );
+    DioFactory.setTokenIntoHeaderAfterLogin(token);
   }
 
   @override

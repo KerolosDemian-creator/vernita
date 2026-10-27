@@ -1,7 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vernita/core/helper/shared_pref_helper.dart';
 import 'package:vernita/core/storage/auth_token_storage.dart';
 import 'package:vernita/features/authentication/logic/auth_session_cubit.dart';
@@ -25,7 +25,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   setUp(() {
-    SharedPreferences.setMockInitialValues({});
+    FlutterSecureStorage.setMockInitialValues({});
   });
 
   test('a new session starts in the initializing state', () {
@@ -48,7 +48,9 @@ void main() {
   });
 
   test('an empty stored token is logged out', () async {
-    SharedPreferences.setMockInitialValues({SharedPrefKeys.userToken: '   '});
+    FlutterSecureStorage.setMockInitialValues({
+      SharedPrefKeys.userToken: '   ',
+    });
     final cubit = AuthSessionCubit(AuthTokenStorage());
     addTearDown(cubit.close);
 
@@ -57,10 +59,10 @@ void main() {
     expect(cubit.state.status, AuthSessionStatus.unauthenticated);
     expect(cubit.isLoggedInUser, isFalse);
     expect(
-      (await SharedPreferences.getInstance()).containsKey(
+      (await SharedPrefHelper.getSecuredString(
         SharedPrefKeys.userToken,
-      ),
-      isFalse,
+      )).trim(),
+      isEmpty,
     );
   });
 
@@ -83,7 +85,7 @@ void main() {
     final expiredToken = _jwtExpiringAt(
       DateTime.now().toUtc().subtract(const Duration(minutes: 1)),
     );
-    SharedPreferences.setMockInitialValues({
+    FlutterSecureStorage.setMockInitialValues({
       SharedPrefKeys.userToken: expiredToken,
     });
 
@@ -99,7 +101,7 @@ void main() {
     final futureToken = _jwtExpiringAt(
       DateTime.now().toUtc().add(const Duration(minutes: 10)),
     );
-    SharedPreferences.setMockInitialValues({
+    FlutterSecureStorage.setMockInitialValues({
       SharedPrefKeys.userToken: futureToken,
     });
 
@@ -122,6 +124,10 @@ void main() {
 
     expect(session.isLoggedInUser, isTrue);
     expect(await AuthTokenStorage().readToken(), 'persisted-token');
+    expect(
+      await SharedPrefHelper.getSecuredString(SharedPrefKeys.userToken),
+      'persisted-token',
+    );
   });
 
   test('startSession without remember me keeps the token in memory', () async {
@@ -150,7 +156,37 @@ void main() {
     expect(session.state.status, AuthSessionStatus.unauthenticated);
     expect(session.isLoggedInUser, isFalse);
     expect(await AuthTokenStorage().readToken(), isNull);
+    expect(
+      await SharedPrefHelper.getSecuredString(SharedPrefKeys.userToken),
+      isEmpty,
+    );
   });
+
+  test(
+    'logout clears only the authentication token from secure storage',
+    () async {
+      FlutterSecureStorage.setMockInitialValues({
+        'unrelated_secure_key': 'keep-me',
+      });
+      final session = AuthSessionCubit(AuthTokenStorage());
+      addTearDown(session.close);
+      await session.startSession(
+        accessToken: 'persisted-token',
+        rememberMe: true,
+      );
+
+      await session.logout();
+
+      expect(
+        await SharedPrefHelper.getSecuredString(SharedPrefKeys.userToken),
+        isEmpty,
+      );
+      expect(
+        await SharedPrefHelper.getSecuredString('unrelated_secure_key'),
+        'keep-me',
+      );
+    },
+  );
 
   test('invalidateSession clears an authenticated session', () async {
     final session = AuthSessionCubit(AuthTokenStorage());
@@ -164,6 +200,10 @@ void main() {
 
     expect(session.isLoggedInUser, isFalse);
     expect(await AuthTokenStorage().readToken(), isNull);
+    expect(
+      await SharedPrefHelper.getSecuredString(SharedPrefKeys.userToken),
+      isEmpty,
+    );
   });
 
   test('invalidateSession is a no-op for a logged-out user', () async {

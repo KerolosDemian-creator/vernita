@@ -1,23 +1,27 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Stable preference keys used by the application.
 class SharedPrefKeys {
   const SharedPrefKeys._();
 
-  /// The persisted JWT access token. The value is intentionally unchanged so
-  /// existing installations keep their remembered session after this
-  /// refactor.
+  /// The secure-storage key for the persisted JWT access token.
+  ///
+  /// The value is intentionally unchanged so the rest of the application keeps
+  /// referring to one token key.
   static const String userToken = 'auth_access_token';
 }
 
-/// Centralized access to [SharedPreferences].
+/// Centralized access to [SharedPreferences] and [FlutterSecureStorage].
 ///
-/// Every read/write awaits [SharedPreferences.getInstance], so callers cannot
-/// observe the storage before it is ready. Authentication-specific behavior
-/// (remember-me semantics, token expiry, session state) lives in
-/// `AuthTokenStorage` and `AuthSessionCubit`.
+/// Every read/write awaits the platform storage, so callers cannot observe it
+/// before it is ready. Authentication-specific behavior (remember-me
+/// semantics, token expiry, session state) lives in `AuthTokenStorage` and
+/// `AuthSessionCubit`.
 class SharedPrefHelper {
   const SharedPrefHelper._();
+
+  static const FlutterSecureStorage _secureStorage = FlutterSecureStorage();
 
   /// Warms the SharedPreferences instance during application startup.
   static Future<void> init() async {
@@ -88,5 +92,30 @@ class SharedPrefHelper {
   static Future<List<String>> getStringList(String key) async {
     final preferences = await SharedPreferences.getInstance();
     return preferences.getStringList(key) ?? const [];
+  }
+
+  /// Saves [value] for [key] in secure storage.
+  ///
+  /// Storage errors are propagated so callers can avoid reporting a successful
+  /// authenticated session when persistence failed.
+  static Future<void> setSecuredString(String key, String value) async {
+    await _secureStorage.write(key: key, value: value);
+  }
+
+  /// Gets a string value for [key] from secure storage.
+  ///
+  /// Returns an empty string when the key is absent.
+  static Future<String> getSecuredString(String key) async {
+    return await _secureStorage.read(key: key) ?? '';
+  }
+
+  /// Removes [key] from secure storage without touching other values.
+  static Future<void> removeSecuredData(String key) async {
+    await _secureStorage.delete(key: key);
+  }
+
+  /// Removes all keys and values from secure storage.
+  static Future<void> clearAllSecuredData() async {
+    await _secureStorage.deleteAll();
   }
 }

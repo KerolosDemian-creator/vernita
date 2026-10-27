@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vernita/core/network/dio_factory.dart';
 import 'package:vernita/core/storage/auth_token_storage.dart';
 import 'package:vernita/features/authentication/logic/auth_session_state.dart';
 
@@ -20,21 +21,24 @@ class AuthSessionCubit extends Cubit<AuthSessionState> {
   Future<void> restoreSession() async {
     try {
       final token = await _tokenStorage.readToken();
-      final hasUsableToken =
-          token != null && _tokenStorage.isTokenUsable(token);
+      final usableToken = token != null && _tokenStorage.isTokenUsable(token)
+          ? token
+          : null;
 
-      if (!hasUsableToken) {
+      if (usableToken == null) {
         // Remove missing, empty, or expired values so the persisted store does
         // not disagree with the restored in-memory session.
         await _tokenStorage.clearToken();
       }
 
+      DioFactory.setTokenIntoHeaderAfterLogin(usableToken ?? '');
       emit(
-        hasUsableToken
+        usableToken != null
             ? const AuthSessionState.authenticated()
             : const AuthSessionState.unauthenticated(),
       );
     } on Object {
+      DioFactory.setTokenIntoHeaderAfterLogin('');
       emit(const AuthSessionState.unauthenticated());
     }
   }
@@ -66,6 +70,7 @@ class AuthSessionCubit extends Cubit<AuthSessionState> {
     _isClearingSession = true;
     try {
       await _tokenStorage.clearToken();
+      DioFactory.setTokenIntoHeaderAfterLogin('');
       if (state.isLoggedInUser) {
         emit(const AuthSessionState.unauthenticated());
       }
