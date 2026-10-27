@@ -7,7 +7,15 @@ import 'package:vernita/vernita_app.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await getItSetup();
-  await getIt<AuthSessionCubit>().restoreSession();
+  await checkIfLoggedInUser();
 
   runApp(VernitaApp(appRouter: AppRouter()));
+}
+
+/// Restores the secure session before the router chooses its initial screen.
+///
+/// [AuthSessionCubit] is the single in-memory source of truth, so this reads
+/// the token through the same storage path used by every other auth operation.
+Future<void> checkIfLoggedInUser() async {
+  await getIt<AuthSessionCubit>().restoreSession();
 }

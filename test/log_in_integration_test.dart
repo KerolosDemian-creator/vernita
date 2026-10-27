@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:dartz/dartz.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vernita/core/errors/api_error_handler.dart';
+import 'package:vernita/core/helper/shared_pref_helper.dart';
+import 'package:vernita/core/network/dio_factory.dart';
 import 'package:vernita/core/storage/auth_token_storage.dart';
 import 'package:vernita/features/authentication/logic/auth_rules.dart';
 import 'package:vernita/features/authentication/logic/auth_session_cubit.dart';
@@ -37,20 +39,32 @@ class _PendingLogInRepo implements LogInRepo {
   ) => completer.future;
 }
 
-LogInResponseModel _response() => LogInResponseModel(
-  id: 1,
-  fullName: 'Test User',
-  email: 'user@example.com',
-  message: 'Login successful',
-  accessToken: 'test-access-token',
-  tokenType: 'Bearer',
-);
+class _FailingAuthTokenStorage extends AuthTokenStorage {
+  @override
+  Future<void> saveToken({
+    required String accessToken,
+    required bool rememberMe,
+  }) async {
+    throw StateError('Secure storage is unavailable.');
+  }
+}
+
+LogInResponseModel _response({String accessToken = 'test-access-token'}) =>
+    LogInResponseModel(
+      id: 1,
+      fullName: 'Test User',
+      email: 'user@example.com',
+      message: 'Login successful',
+      accessToken: accessToken,
+      tokenType: 'Bearer',
+    );
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   setUp(() {
-    SharedPreferences.setMockInitialValues({});
+    FlutterSecureStorage.setMockInitialValues({});
+    DioFactory.reset();
   });
 
   group('login password minimum length', () {
@@ -89,6 +103,10 @@ void main() {
     await storage.saveToken(accessToken: 'remembered-token', rememberMe: true);
 
     expect(await AuthTokenStorage().readToken(), 'remembered-token');
+    expect(
+      await SharedPrefHelper.getSecuredString(SharedPrefKeys.userToken),
+      'remembered-token',
+    );
   });
 
   test('remember me disabled keeps the token in memory only', () async {
@@ -118,6 +136,61 @@ void main() {
     expect(repo.lastRequest?.rememberMe, isTrue);
     expect(session.isLoggedInUser, isTrue);
     expect(await AuthTokenStorage().readToken(), 'test-access-token');
+    expect(
+      await SharedPrefHelper.getSecuredString(SharedPrefKeys.userToken),
+      'test-access-token',
+    );
+  });
+
+  test('successful login updates the Dio authorization header', () async {
+    final dio = DioFactory.getDio();
+    final repo = _FakeLogInRepo(right(_response()));
+    final session = AuthSessionCubit(AuthTokenStorage());
+    final cubit = LogInCubit(repo, session);
+    addTearDown(cubit.close);
+
+    cubit.emailController.text = 'user@example.com';
+    cubit.passwordController.text = 'password123';
+    await cubit.submit();
+
+    expect(cubit.state.status, LogInStatus.success);
+    expect(dio.options.headers['Authorization'], 'Bearer test-access-token');
+  });
+
+  test('login fails when the token cannot be persisted', () async {
+    final repo = _FakeLogInRepo(right(_response()));
+    final session = AuthSessionCubit(_FailingAuthTokenStorage());
+    final cubit = LogInCubit(repo, session);
+    addTearDown(cubit.close);
+
+    cubit.emailController.text = 'user@example.com';
+    cubit.passwordController.text = 'password123';
+    await cubit.submit();
+
+    expect(cubit.state.status, LogInStatus.failure);
+    expect(
+      cubit.state.errorMessage,
+      'Could not save your session. Please try again.',
+    );
+    expect(session.isLoggedInUser, isFalse);
+  });
+
+  test('login does not succeed with an empty token', () async {
+    final repo = _FakeLogInRepo(right(_response(accessToken: '   ')));
+    final session = AuthSessionCubit(AuthTokenStorage());
+    final cubit = LogInCubit(repo, session);
+    addTearDown(cubit.close);
+
+    cubit.emailController.text = 'user@example.com';
+    cubit.passwordController.text = 'password123';
+    await cubit.submit();
+
+    expect(cubit.state.status, LogInStatus.failure);
+    expect(session.isLoggedInUser, isFalse);
+    expect(
+      await SharedPrefHelper.getSecuredString(SharedPrefKeys.userToken),
+      isEmpty,
+    );
   });
 
   test('submit emits loading until the API responds', () async {
@@ -151,6 +224,10 @@ void main() {
     expect(repo.lastRequest?.rememberMe, isFalse);
     expect(session.isLoggedInUser, isTrue);
     expect(await AuthTokenStorage().readToken(), isNull);
+    expect(
+      await SharedPrefHelper.getSecuredString(SharedPrefKeys.userToken),
+      isEmpty,
+    );
   });
 
   test('failed login emits the backend message', () async {

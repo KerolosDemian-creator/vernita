@@ -4,8 +4,10 @@ import 'package:vernita/core/helper/shared_pref_helper.dart';
 
 /// Persists and restores the authentication access token.
 ///
-/// The token is kept in memory for the current app session. It is only written
-/// to SharedPreferences when "Remember me" is enabled, preserving the existing
+/// Physical storage is delegated to [SharedPrefHelper] secure storage; this
+/// class only adds remember-me, in-memory caching, and JWT expiry semantics.
+/// The token is kept in memory for the current app session and is only written
+/// to secure storage when "Remember me" is enabled, preserving the existing
 /// login behavior.
 class AuthTokenStorage {
   String? _cachedAccessToken;
@@ -24,16 +26,19 @@ class AuthTokenStorage {
     }
 
     if (rememberMe) {
-      final saved = await SharedPrefHelper.setData(
+      await SharedPrefHelper.setSecuredString(
         SharedPrefKeys.userToken,
         normalizedToken,
       );
-      if (!saved) {
+      final persistedToken = (await SharedPrefHelper.getSecuredString(
+        SharedPrefKeys.userToken,
+      )).trim();
+      if (persistedToken != normalizedToken) {
         throw StateError('Could not persist the authentication token.');
       }
     } else {
-      await SharedPrefHelper.removeData(SharedPrefKeys.userToken);
-      final persistedToken = (await SharedPrefHelper.getString(
+      await SharedPrefHelper.removeSecuredData(SharedPrefKeys.userToken);
+      final persistedToken = (await SharedPrefHelper.getSecuredString(
         SharedPrefKeys.userToken,
       )).trim();
       if (persistedToken.isNotEmpty) {
@@ -48,7 +53,7 @@ class AuthTokenStorage {
     final cachedToken = _cachedAccessToken;
     if (cachedToken != null) return cachedToken;
 
-    final storedToken = (await SharedPrefHelper.getString(
+    final storedToken = (await SharedPrefHelper.getSecuredString(
       SharedPrefKeys.userToken,
     )).trim();
     if (storedToken.isEmpty) return null;
@@ -78,8 +83,8 @@ class AuthTokenStorage {
   }
 
   Future<void> clearToken() async {
-    await SharedPrefHelper.removeData(SharedPrefKeys.userToken);
-    final persistedToken = (await SharedPrefHelper.getString(
+    await SharedPrefHelper.removeSecuredData(SharedPrefKeys.userToken);
+    final persistedToken = (await SharedPrefHelper.getSecuredString(
       SharedPrefKeys.userToken,
     )).trim();
     if (persistedToken.isNotEmpty) {

@@ -1,10 +1,13 @@
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:vernita/core/helper/shared_pref_helper.dart';
 import 'package:vernita/core/network/api_constants.dart';
 import 'package:vernita/core/network/dio_factory.dart';
 import 'package:vernita/core/network/interceptors/auth_interceptor.dart';
+import 'package:vernita/core/storage/auth_token_storage.dart';
 
 class _CapturingHttpAdapter implements HttpClientAdapter {
   int statusCode = 200;
@@ -39,6 +42,8 @@ void main() {
   late int unauthorizedCalls;
 
   setUp(() {
+    FlutterSecureStorage.setMockInitialValues({});
+    DioFactory.reset();
     dio = Dio(BaseOptions(baseUrl: ApiEndPoints.apiBaseUrl));
     adapter = _CapturingHttpAdapter();
     dio.httpClientAdapter = adapter;
@@ -71,6 +76,15 @@ void main() {
   });
 
   test('does not attach a token to public authentication requests', () async {
+    await dio.post(ApiEndPoints.login, data: {'email': 'a@b.com'});
+
+    expect(adapter.lastRequest?.headers.containsKey('Authorization'), isFalse);
+    expect(tokenReads, 0);
+  });
+
+  test('public requests remove a header restored at startup', () async {
+    dio.options.headers['Authorization'] = 'Bearer stored-token';
+
     await dio.post(ApiEndPoints.login, data: {'email': 'a@b.com'});
 
     expect(adapter.lastRequest?.headers.containsKey('Authorization'), isFalse);
@@ -154,4 +168,58 @@ void main() {
       );
     },
   );
+
+  test('DioFactory loads the secured token into its default headers', () async {
+    FlutterSecureStorage.setMockInitialValues({
+      SharedPrefKeys.userToken: 'secure-token',
+    });
+    final factoryDio = DioFactory.getDio();
+
+    await DioFactory.addDioHeaders();
+
+    expect(factoryDio.options.headers['Accept'], 'application/json');
+    expect(factoryDio.options.headers['Authorization'], 'Bearer secure-token');
+  });
+
+  test('DioFactory omits the header when no usable token exists', () async {
+    FlutterSecureStorage.setMockInitialValues({
+      SharedPrefKeys.userToken: '   ',
+    });
+    final factoryDio = DioFactory.getDio();
+
+    await DioFactory.addDioHeaders();
+
+    expect(factoryDio.options.headers['Accept'], 'application/json');
+    expect(factoryDio.options.headers.containsKey('Authorization'), isFalse);
+  });
+
+  test('setTokenIntoHeaderAfterLogin updates and clears the header', () {
+    final factoryDio = DioFactory.getDio();
+
+    DioFactory.setTokenIntoHeaderAfterLogin('new-token');
+    expect(factoryDio.options.headers['Authorization'], 'Bearer new-token');
+
+    DioFactory.setTokenIntoHeaderAfterLogin('   ');
+    expect(factoryDio.options.headers.containsKey('Authorization'), isFalse);
+  });
+
+  test('protected requests use the token loaded from secure storage', () async {
+    FlutterSecureStorage.setMockInitialValues({
+      SharedPrefKeys.userToken: 'secure-token',
+    });
+    final storage = AuthTokenStorage();
+    final factoryDio = DioFactory.getDio(
+      readToken: storage.readToken,
+      onUnauthorized: () async {},
+    );
+    await DioFactory.addDioHeaders();
+    factoryDio.httpClientAdapter = adapter;
+
+    await factoryDio.get('/api/v1/users/me');
+
+    expect(
+      adapter.lastRequest?.headers['Authorization'],
+      'Bearer secure-token',
+    );
+  });
 }

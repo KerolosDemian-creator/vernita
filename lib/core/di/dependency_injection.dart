@@ -35,6 +35,7 @@ Future<void> getItSetup() async {
     readToken: () => getIt<AuthTokenStorage>().readToken(),
     onUnauthorized: () => getIt<AuthSessionCubit>().invalidateSession(),
   );
+  await DioFactory.addDioHeaders();
   getIt.registerLazySingleton<ApiService>(() => ApiService(dio));
 
   getIt.registerLazySingleton<SignUpRepo>(() => SignUpRepoImp(getIt()));
