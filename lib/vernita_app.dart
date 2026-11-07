@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:vernita/core/di/dependency_injection.dart';
@@ -32,22 +33,26 @@ class VernitaApp extends StatelessWidget {
                 ? Routes.main
                 : Routes.logIn,
             onGenerateRoute: appRouter.generateRoute,
-            builder: (context, child) =>
-                BlocListener<AuthSessionCubit, AuthSessionState>(
-                  listenWhen: (previous, current) =>
-                      previous.isLoggedInUser && !current.isLoggedInUser,
-                  listener: (context, state) => appRouter.goToLogin(),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [Color(0xFFFFF3E6), Color(0xFFFCE3D2)],
-                      ),
+            builder: (context, child) => AnnotatedRegion<SystemUiOverlayStyle>(
+              value: SystemUiOverlayStyle.dark.copyWith(
+                statusBarColor: Colors.transparent,
+              ),
+              child: BlocListener<AuthSessionCubit, AuthSessionState>(
+                listenWhen: (previous, current) =>
+                    previous.isLoggedInUser && !current.isLoggedInUser,
+                listener: (context, state) => appRouter.goToLogin(),
+                child: Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [Color(0xFFFFF3E6), Color(0xFFFCE3D2)],
                     ),
-                    child: child,
                   ),
+                  child: child,
                 ),
+              ),
+            ),
           );
         },
       ),

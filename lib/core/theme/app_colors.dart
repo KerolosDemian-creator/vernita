@@ -62,6 +62,11 @@ abstract final class AppColors {
   static const Color greyText = Color(0xFF525252);
   static const Color personalTask = Color(0xFF9B51E0);
 
+  // Analytics accents
+  static const Color speechTeal = Color(0xFF397E8E);
+  static const Color positiveGreen = Color(0xFF34805A);
+  static const Color positiveGreenSurface = Color(0xFFE7F5EC);
+
   static const Color white = Color(0xFFFEFBF5);
   static const Color softBlush = Color(0xFFFEDCD8);
   static const Color paleApricot = Color(0xFFFEE6D0);
