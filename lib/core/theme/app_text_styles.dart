@@ -91,10 +91,9 @@ class AppTextStyles {
     fontSize: 14.sp,
     fontWeight: FontWeight.w600,
     color: AppColors.brownText,
-  ); 
-  
-   /// Text field input.
-  
+  );
+
+  /// Text field input.
 
   static TextStyle font14BrownPoppins700W = TextStyle(
     fontFamily: AppFonts.poppins,
@@ -189,8 +188,6 @@ class AppTextStyles {
     fontWeight: FontWeight.w600,
     color: AppColors.brownText,
   );
-
-
 
   /// Text field hint.
   static TextStyle font15GreyPoppins400W = TextStyle(
