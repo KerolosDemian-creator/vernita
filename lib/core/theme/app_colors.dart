@@ -66,6 +66,12 @@ abstract final class AppColors {
   static const Color speechTeal = Color(0xFF397E8E);
   static const Color positiveGreen = Color(0xFF34805A);
   static const Color positiveGreenSurface = Color(0xFFE7F5EC);
+  static const Color analyticsAmber = Color(0xFFE6A23C);
+  static const Color analyticsWarningSurface = Color(0xFFFFF9EB);
+  static const Color analyticsWarningBorder = Color(0xFFF6E4B0);
+  static const Color analyticsDangerSurface = Color(0xFFFEF3F2);
+  static const Color analyticsDangerBorder = Color(0xFFF8D7D5);
+  static const Color analyticsDivider = Color(0xFFF1E5DB);
 
   static const Color white = Color(0xFFFEFBF5);
   static const Color softBlush = Color(0xFFFEDCD8);

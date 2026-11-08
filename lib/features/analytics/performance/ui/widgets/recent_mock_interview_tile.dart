@@ -14,6 +14,7 @@ class RecentMockInterviewTile extends StatelessWidget {
     required this.techScore,
     required this.speechScore,
     required this.visionScore,
+    this.onTap,
   });
 
   final String title;
@@ -23,79 +24,84 @@ class RecentMockInterviewTile extends StatelessWidget {
   final String techScore;
   final String speechScore;
   final String visionScore;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
-      decoration: BoxDecoration(
-        color: AppColors.fieldFill,
-        borderRadius: BorderRadius.circular(24.r),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.font15BrownPoppins700W.copyWith(
-              fontSize: 14.sp,
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onTap,
+      child: Container(
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+        decoration: BoxDecoration(
+          color: AppColors.fieldFill,
+          borderRadius: BorderRadius.circular(24.r),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.font15BrownPoppins700W.copyWith(
+                fontSize: 14.sp,
+              ),
             ),
-          ),
-          verticalSpace(3),
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  '$date  •  $duration',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.font12GreyPoppins400W.copyWith(
-                    fontSize: 11.sp,
+            verticalSpace(3),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    '$date  •  $duration',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.font12GreyPoppins400W.copyWith(
+                      fontSize: 11.sp,
+                    ),
                   ),
                 ),
-              ),
-              Text(
-                score,
-                style: AppTextStyles.font20BrownPoppins700W.copyWith(
-                  fontSize: 18.sp,
-                  color: AppColors.lightPeachText,
-                  height: 1.1,
+                Text(
+                  score,
+                  style: AppTextStyles.font20BrownPoppins700W.copyWith(
+                    fontSize: 18.sp,
+                    color: AppColors.lightPeachText,
+                    height: 1.1,
+                  ),
                 ),
-              ),
-              horizantalSpace(2),
-              Icon(
-                Icons.chevron_right_rounded,
-                color: AppColors.brownText,
-                size: 20.r,
-              ),
-            ],
-          ),
-          verticalSpace(10),
-          Wrap(
-            spacing: 16.w,
-            runSpacing: 4.h,
-            children: [
-              _ScoreLabel(
-                label: 'Tech',
-                value: techScore,
-                color: AppColors.lightPeachText,
-              ),
-              _ScoreLabel(
-                label: 'Speech',
-                value: speechScore,
-                color: AppColors.speechTeal,
-              ),
-              _ScoreLabel(
-                label: 'Vision',
-                value: visionScore,
-                color: AppColors.personalTask,
-              ),
-            ],
-          ),
-        ],
+                horizantalSpace(2),
+                Icon(
+                  Icons.chevron_right_rounded,
+                  color: AppColors.brownText,
+                  size: 20.r,
+                ),
+              ],
+            ),
+            verticalSpace(10),
+            Wrap(
+              spacing: 16.w,
+              runSpacing: 4.h,
+              children: [
+                _ScoreLabel(
+                  label: 'Tech',
+                  value: techScore,
+                  color: AppColors.lightPeachText,
+                ),
+                _ScoreLabel(
+                  label: 'Speech',
+                  value: speechScore,
+                  color: AppColors.speechTeal,
+                ),
+                _ScoreLabel(
+                  label: 'Vision',
+                  value: visionScore,
+                  color: AppColors.personalTask,
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
