@@ -34,6 +34,8 @@ class AppSvgs {
   // Analytics Svgs
   static const String aiInsightsIcon =
       'lib/core/utils/Svgs/ai_insights_icon.svg';
+  static const String redAiInsightsIcon =
+      'lib/core/utils/Svgs/red_ai_insights_icon.svg';
 
   // Signup Screen
   static const String googleIcon = 'lib/core/utils/Svgs/google_svg_icon.svg';

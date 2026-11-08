@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
+import 'package:vernita/core/helper/extensions.dart';
 import 'package:vernita/core/helper/spacing.dart';
+import 'package:vernita/core/routing/routes.dart';
 import 'package:vernita/core/theme/app_colors.dart';
 import 'package:vernita/core/theme/app_text_styles.dart';
 import 'package:vernita/features/analytics/performance/ui/widgets/recent_mock_interview_tile.dart';
@@ -34,7 +36,7 @@ class RecentMockInterviewsSection extends StatelessWidget {
           ],
         ),
         verticalSpace(12),
-        const RecentMockInterviewTile(
+        RecentMockInterviewTile(
           title: 'Senior Product Designer Mock',
           date: 'Aug 26',
           duration: '45 min',
@@ -42,9 +44,10 @@ class RecentMockInterviewsSection extends StatelessWidget {
           techScore: '88',
           speechScore: '82',
           visionScore: '78',
+          onTap: () => context.pushNamed(Routes.sessionAnalysis),
         ),
         verticalSpace(10),
-        const RecentMockInterviewTile(
+        RecentMockInterviewTile(
           title: 'Full Stack Engineer Mock',
           date: 'Aug 20',
           duration: '35 min',
@@ -52,6 +55,7 @@ class RecentMockInterviewsSection extends StatelessWidget {
           techScore: '80',
           speechScore: '76',
           visionScore: '82',
+          onTap: () => context.pushNamed(Routes.sessionAnalysis),
         ),
       ],
     );

@@ -10,4 +10,8 @@ class Routes {
   static const String notification = '/notification';
   static const String notificationSettings = '/notificationSettings';
   static const String settings = '/settings';
+  static const String sessionAnalysis = '/session-analysis';
+  static const String detailedSkillBreakdown = '/detailed-skill-breakdown';
+  static const String interviewQuestionsFeedback =
+      '/interview-questions-feedback';
 }
