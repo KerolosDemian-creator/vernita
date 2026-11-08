@@ -3,7 +3,7 @@ import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:vernita/core/helper/spacing.dart';
 import 'package:vernita/core/theme/app_colors.dart';
 import 'package:vernita/core/widgets/app_header.dart';
-import 'package:vernita/features/analytics/skill_breakdown/ui/widgets/skill_group_card.dart';
+import 'package:vernita/features/analytics/skill_breakdown/ui/widgets/skill_card_item.dart';
 import 'package:vernita/features/analytics/skill_breakdown/ui/widgets/skill_metric_item.dart';
 
 class SkillBreakdownBody extends StatelessWidget {
@@ -25,13 +25,13 @@ class SkillBreakdownBody extends StatelessWidget {
             ),
             verticalSpace(18),
 
-            SkillGroupCard(
+            SkillCardItem(
               title: 'Technical Skills',
               score: 78,
               maxScore: 100,
               icon: Icons.code_rounded,
               accent: AppColors.lightPeachText,
-              metrics: [
+              skillItems: [
                 SkillMetricItem(
                   title: 'Problem Solving',
                   score: 85,
@@ -51,13 +51,13 @@ class SkillBreakdownBody extends StatelessWidget {
 
             verticalSpace(14),
 
-            SkillGroupCard(
+            SkillCardItem(
               title: 'Communication & Delivery',
               score: 82,
               maxScore: 100,
               icon: Icons.mic_none_rounded,
               accent: AppColors.lightPeachText,
-              metrics: [
+              skillItems: [
                 SkillMetricItem(
                   title: 'Clarity',
                   score: 90,
@@ -77,13 +77,13 @@ class SkillBreakdownBody extends StatelessWidget {
 
             verticalSpace(14),
 
-            SkillGroupCard(
+            SkillCardItem(
               title: 'Visual Communication',
               score: 68,
               maxScore: 100,
               icon: Icons.visibility_outlined,
               accent: AppColors.analyticsAmber,
-              metrics: [
+              skillItems: [
                 SkillMetricItem(
                   title: 'Eye Contact',
                   score: 65,
