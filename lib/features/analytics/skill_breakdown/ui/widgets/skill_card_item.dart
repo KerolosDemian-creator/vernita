@@ -3,17 +3,18 @@ import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:vernita/core/helper/spacing.dart';
 import 'package:vernita/core/theme/app_colors.dart';
 import 'package:vernita/core/theme/app_text_styles.dart';
+import 'package:vernita/features/analytics/skill_breakdown/ui/widgets/skill_metric_item.dart';
 import 'package:vernita/features/analytics/widgets/analytics_surface_card.dart';
 
-class SkillGroupCard extends StatelessWidget {
-  const SkillGroupCard({
+class SkillCardItem extends StatelessWidget {
+  const SkillCardItem({
     super.key,
     required this.title,
     required this.score,
     required this.maxScore,
     required this.icon,
     required this.accent,
-    required this.metrics,
+    required this.skillItems,
   });
 
   final String title;
@@ -21,7 +22,7 @@ class SkillGroupCard extends StatelessWidget {
   final int maxScore;
   final IconData icon;
   final Color accent;
-  final List<Widget> metrics;
+  final List<SkillMetricItem> skillItems;
 
   @override
   Widget build(BuildContext context) {
@@ -67,11 +68,7 @@ class SkillGroupCard extends StatelessWidget {
             ],
           ),
           verticalSpace(12),
-          Divider(
-            height: 1,
-            thickness: 1,
-            color: AppColors.analyticsDivider,
-          ),
+          Divider(height: 1, thickness: 1, color: AppColors.analyticsDivider),
           verticalSpace(14),
           ..._buildMetrics(),
         ],
@@ -82,10 +79,10 @@ class SkillGroupCard extends StatelessWidget {
   List<Widget> _buildMetrics() {
     final spacedMetrics = <Widget>[];
 
-    for (var index = 0; index < metrics.length; index++) {
-      spacedMetrics.add(metrics[index]);
+    for (var index = 0; index < skillItems.length; index++) {
+      spacedMetrics.add(skillItems[index]);
 
-      if (index != metrics.length - 1) {
+      if (index != skillItems.length - 1) {
         spacedMetrics.add(verticalSpace(14));
       }
     }
