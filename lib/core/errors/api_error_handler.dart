@@ -107,6 +107,10 @@ String _messageForStatus(int? statusCode) {
       return 'You do not have permission to perform this action.';
     case 404:
       return 'The requested resource was not found.';
+    case 413:
+      return 'The file is too large. Please choose a smaller CV.';
+    case 415:
+      return 'That file type is not supported. Please upload a PDF or DOCX.';
     case 422:
       return 'Some of the details you entered are invalid.';
     case 500:
