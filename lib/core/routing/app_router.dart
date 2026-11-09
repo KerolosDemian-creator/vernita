@@ -107,7 +107,7 @@ class AppRouter {
           builder: (_) => MultiBlocProvider(
             providers: [
               BlocProvider(create: (_) => BottomNavCubit()),
-              BlocProvider(create: (_) => getIt<CvUploadCubit>()),
+              BlocProvider(create: (_) => getIt<CvUploadCubit>()..fetchCvs()),
             ],
             child: const MainLayout(),
           ),

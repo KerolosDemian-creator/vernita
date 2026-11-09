@@ -16,14 +16,15 @@ import 'package:vernita/features/authentication/reset_password/logic/reset_pass_
 import 'package:vernita/features/authentication/sign_up/data/repo/sign_up_repo.dart';
 import 'package:vernita/features/authentication/sign_up/data/repo/sign_up_repo_imp.dart';
 import 'package:vernita/features/authentication/sign_up/logic/sign_up_cubit.dart';
+import 'package:vernita/features/home/data/data_source/cv_remote_data_source.dart';
+import 'package:vernita/features/home/data/repo/cv_repo.dart';
+import 'package:vernita/features/home/data/repo/cv_repo_imp.dart';
 import 'package:vernita/features/home/logic/cv_upload_cubit.dart';
 
 final getIt = GetIt.instance;
 
 Future<void> getItSetup() async {
   await SharedPrefHelper.init();
-
-  getIt.registerFactory<CvUploadCubit>(() => CvUploadCubit());
 
   getIt.registerLazySingleton<AuthTokenStorage>(() => AuthTokenStorage());
   getIt.registerLazySingleton<AuthSessionCubit>(
@@ -37,6 +38,12 @@ Future<void> getItSetup() async {
   );
   await DioFactory.addDioHeaders();
   getIt.registerLazySingleton<ApiService>(() => ApiService(dio));
+
+  getIt.registerLazySingleton<CvRemoteDataSource>(
+    () => CvRemoteDataSource(dio),
+  );
+  getIt.registerLazySingleton<CvRepo>(() => CvRepoImp(getIt()));
+  getIt.registerFactory<CvUploadCubit>(() => CvUploadCubit(getIt()));
 
   getIt.registerLazySingleton<SignUpRepo>(() => SignUpRepoImp(getIt()));
   getIt.registerFactory<SignUpCubit>(() => SignUpCubit(getIt()));

@@ -5,6 +5,7 @@ import 'package:vernita/core/helper/spacing.dart';
 import 'package:vernita/core/theme/app_colors.dart';
 import 'package:vernita/core/theme/app_text_styles.dart';
 import 'package:vernita/core/widgets/app_button.dart';
+import 'package:vernita/features/home/logic/cv_rules.dart';
 import 'package:vernita/features/home/logic/cv_upload_cubit.dart';
 
 class UploadCvContainer extends StatelessWidget {
@@ -50,7 +51,8 @@ class UploadCvContainer extends StatelessWidget {
             verticalSpace(4),
 
             Text(
-              'PDF, DOC, DOCX (Max. 10MB)',
+              '${CvRules.allowedExtensions.map((e) => e.toUpperCase()).join(', ')} '
+              '(Max. ${CvRules.maxSizeInMb}MB)',
               style: AppTextStyles.font12GreyPoppins400W,
             ),
             verticalSpace(32),
