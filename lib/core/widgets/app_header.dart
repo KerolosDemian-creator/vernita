@@ -4,12 +4,23 @@ import 'package:vernita/core/helper/extensions.dart';
 import 'package:vernita/core/helper/spacing.dart';
 import 'package:vernita/core/theme/app_colors.dart';
 import 'package:vernita/core/theme/app_text_styles.dart';
+import 'package:vernita/core/widgets/round_icon_button.dart';
 
+/// Top bar: [back] title [trailing].
+/// Set [showBack] to false for tab screens (Profile, ...).
 class AppHeader extends StatelessWidget {
-  const AppHeader({super.key, required this.title, this.centerTitle = true});
+  const AppHeader({
+    super.key,
+    required this.title,
+    this.centerTitle = true,
+    this.showBack = true,
+    this.trailing,
+  });
 
   final String title;
   final bool centerTitle;
+  final bool showBack;
+  final Widget? trailing;
 
   @override
   Widget build(BuildContext context) {
@@ -19,17 +30,19 @@ class AppHeader extends StatelessWidget {
           ? Stack(
               alignment: Alignment.center,
               children: [
-                const Align(
-                  alignment: Alignment.centerLeft,
-                  child: _BackButton(),
-                ),
+                if (showBack)
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: _BackButton(),
+                  ),
                 Text(title, style: AppTextStyles.font22BrownPoppins700W),
+                if (trailing != null)
+                  Align(alignment: Alignment.centerRight, child: trailing!),
               ],
             )
           : Row(
               children: [
-                const _BackButton(),
-                horizantalSpace(10),
+                if (showBack) ...[const _BackButton(), horizantalSpace(10)],
                 Expanded(
                   child: Text(
                     title,
@@ -38,6 +51,7 @@ class AppHeader extends StatelessWidget {
                     style: AppTextStyles.font22BrownPoppins700W,
                   ),
                 ),
+                if (trailing != null) trailing!,
               ],
             ),
     );
@@ -49,21 +63,10 @@ class _BackButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return RoundIconButton(
+      icon: Icons.arrow_back_rounded,
+      iconColor: AppColors.nonSelectedIcon,
       onTap: () => context.pop(),
-      child: Container(
-        width: 40.w,
-        height: 40.h,
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.circular(50.r),
-        ),
-        child: Icon(
-          Icons.arrow_back_rounded,
-          color: AppColors.nonSelectedIcon,
-          size: 22.r,
-        ),
-      ),
     );
   }
 }

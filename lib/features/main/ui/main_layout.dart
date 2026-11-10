@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vernita/features/calendar/ui/calendar_screen.dart';
 import 'package:vernita/features/home/logic/cv_upload_cubit.dart';
 import 'package:vernita/features/home/logic/cv_upload_state.dart';
 import 'package:vernita/features/home/ui/home_screen.dart';
@@ -7,6 +8,7 @@ import 'package:vernita/features/home/ui/widgets/home_before_upload_cv/error_dia
 import 'package:vernita/features/interview/ui/interview_screen.dart';
 import 'package:vernita/features/main/logic/bottom_nav_cubit.dart';
 import 'package:vernita/features/main/ui/widgets/custom_bottom_nav_bar.dart';
+import 'package:vernita/features/profile/profile/ui/profile_screen.dart';
 
 class MainLayout extends StatelessWidget {
   const MainLayout({super.key});
@@ -15,10 +17,10 @@ class MainLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     const pages = [
       HomeScreen(),
-      Scaffold(body: Center(child: Text('Calendar Screen'))),
+      CalendarScreen(),
       InterviewScreen(),
       Scaffold(body: Center(child: Text('Analytics Screen'))),
-      Scaffold(body: Center(child: Text('Profile Screen'))),
+      ProfileScreen(),
     ];
 
     return BlocBuilder<BottomNavCubit, int>(

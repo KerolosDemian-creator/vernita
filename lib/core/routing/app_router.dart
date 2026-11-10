@@ -10,15 +10,20 @@ import 'package:vernita/features/authentication/reset_password/logic/reset_pass_
 import 'package:vernita/features/authentication/reset_password/ui/reset_pass_screen.dart';
 import 'package:vernita/features/authentication/sign_up/logic/sign_up_cubit.dart';
 import 'package:vernita/features/authentication/sign_up/ui/sign_up_screen.dart';
+import 'package:vernita/features/calendar/data/models/calendar_event_model.dart';
+import 'package:vernita/features/calendar/ui/add_event_screen.dart';
+import 'package:vernita/features/calendar/ui/add_task_screen.dart';
 import 'package:vernita/features/home/ui/home_screen.dart';
 import 'package:vernita/features/home/logic/cv_upload_cubit.dart';
 import 'package:vernita/features/interview/ui/interview_screen.dart';
 import 'package:vernita/features/main/logic/bottom_nav_cubit.dart';
 import 'package:vernita/features/main/ui/main_layout.dart';
-import 'package:vernita/features/notifications/ui/notifications_screen.dart';
+import 'package:vernita/features/profile/settings/notificationsSettings/ui/notifications_setting_screen.dart';
 import 'package:vernita/features/onboarding/ui/onboarding_screen.dart';
-import 'package:vernita/features/settings/ui/notification_settings_screen.dart';
-import 'package:vernita/features/settings/ui/settings_screen.dart';
+import 'package:vernita/features/notifications/ui/notifications_screen.dart';
+import 'package:vernita/features/profile/settings/ui/settings_screen.dart';
+import 'package:vernita/features/profile/profile/ui/personal_info_screen.dart';
+import 'package:vernita/features/profile/security/ui/security_screen.dart';
 
 class AppRouter {
   Route generateRoute(RouteSettings settings) {
@@ -66,14 +71,29 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const HomeScreen());
       case Routes.interviewSession:
         return MaterialPageRoute(builder: (_) => const InterviewScreen());
-      case Routes.notification:
+      case Routes.notifications:
         return MaterialPageRoute(builder: (_) => const NotificationsScreen());
       case Routes.settings:
         return MaterialPageRoute(builder: (_) => const SettingsScreen());
       case Routes.notificationSettings:
         return MaterialPageRoute(
-          builder: (_) => const NotificationSettingsScreen(),
-        );
+          builder: (_) => const NotificationsSettingScreen(),
+      );
+
+      case Routes.personalInfo:
+        return MaterialPageRoute(builder: (_) => const PersonalInfoScreen());
+
+      case Routes.security:
+        return MaterialPageRoute(builder: (_) => const SecurityScreen());
+
+      case Routes.addEvent:
+        return MaterialPageRoute(builder: (_) => const AddEventScreen());
+
+      case Routes.addTask:
+        final type = settings.arguments is EventType
+            ? settings.arguments as EventType
+            : EventType.task;
+        return MaterialPageRoute(builder: (_) => AddTaskScreen(type: type));
 
       case Routes.main:
         return MaterialPageRoute(

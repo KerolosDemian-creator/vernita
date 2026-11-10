@@ -7,7 +7,12 @@ class Routes {
   static const String main = '/';
   static const String homeScreen = '/home';
   static const String interviewSession = '/interviewSession';
-  static const String notification = '/notification';
-  static const String notificationSettings = '/notificationSettings';
+  static const String profile = '/profile';
+  static const String personalInfo = '/personal-info';
   static const String settings = '/settings';
+  static const String notifications = '/notifications';
+  static const String security = '/security';
+  static const String notificationSettings = '/notification-settings';
+  static const String addEvent = '/add-event';
+  static const String addTask = '/add-task';
 }

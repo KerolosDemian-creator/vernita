@@ -160,4 +160,11 @@ abstract final class AppColors {
   static const LinearGradient linear2 = LinearGradient(
     colors: [transparentLightPeach, buttonGradientEnd],
   );
+
+    // ================= Profile / Settings / Notifications / Security =================
+  static const Color divider = Color(0x14280F05);     // thin line between rows
+  static const Color successBg = Color(0xFFDDF5E8);
+  static const Color violetBg = Color(0xFFEDE4FB);
+  static const Color switchOff = Color(0xFFEBDCCF);   // switch track when off
+
 }
