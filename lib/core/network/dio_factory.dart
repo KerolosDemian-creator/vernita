@@ -37,9 +37,9 @@ class DioFactory {
       // contain passwords, tokens, and personal data.
       dio.interceptors.add(
         PrettyDioLogger(
-          requestHeader: true,
+          requestHeader: false,
           requestBody: true,
-          responseHeader: true,
+          responseHeader: false,
           responseBody: true,
           error: true,
         ),

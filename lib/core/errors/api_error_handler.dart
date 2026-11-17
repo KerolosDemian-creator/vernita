@@ -51,13 +51,15 @@ ApiErrorModel _fromDioException(DioException error) {
     case DioExceptionType.receiveTimeout:
     case DioExceptionType.transformTimeout:
       return _buildError(
-        message: 'The request timed out. Please try again.',
+        message:
+            'The server is not responding. Check that the backend is running and reachable, then try again.',
         status: -1,
         error: 'Timeout',
       );
     case DioExceptionType.connectionError:
       return _buildError(
-        message: 'No internet connection. Please check your network.',
+        message:
+            'Cannot reach the server. Check that the backend is running and reachable from this device.',
         status: -2,
         error: 'Connection Error',
       );
@@ -104,7 +106,8 @@ String _messageForStatus(int? statusCode) {
     case 401:
       return 'Your session has expired. Please sign in again.';
     case 403:
-      return 'You do not have permission to perform this action.';
+      // The backend answers 403 when the token is missing or expired.
+      return 'Your session has expired. Please sign in again.';
     case 404:
       return 'The requested resource was not found.';
     case 413:
