@@ -4,13 +4,6 @@
     <option name="columnSorters">
       <list>
         <ColumnSorterState>
-<<<<<<< HEAD
-          <option name="column" value="Type" />
-          <option name="order" value="DESCENDING" />
-        </ColumnSorterState>
-        <ColumnSorterState>
-=======
->>>>>>> 471083728f45a1c222ae527861461ced9e1d0bda
           <option name="column" value="Name" />
           <option name="order" value="ASCENDING" />
         </ColumnSorterState>

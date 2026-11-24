@@ -104,8 +104,7 @@ String _messageForStatus(int? statusCode) {
     case 401:
       return 'Your session has expired. Please sign in again.';
     case 403:
-      // The backend answers 403 when the token is missing or expired.
-      return 'Your session has expired. Please sign in again.';
+      return 'You do not have permission to perform this action.';
     case 404:
       return 'The requested resource was not found.';
     case 413:

@@ -5,8 +5,6 @@ import 'package:vernita/core/helper/spacing.dart';
 import 'package:vernita/core/theme/app_colors.dart';
 import 'package:vernita/core/theme/app_text_styles.dart';
 
-/// Top bar: [back] title [trailing].
-/// Set [showBack] to false for tab screens (Profile, ...).
 class AppHeader extends StatelessWidget {
   const AppHeader({
     super.key,

@@ -40,10 +40,7 @@ class VernitaApp extends StatelessWidget {
               child: BlocListener<AuthSessionCubit, AuthSessionState>(
                 listenWhen: (previous, current) =>
                     previous.isLoggedInUser && !current.isLoggedInUser,
-                listener: (context, state) {
-                  appRouter.goToLogin();
-                  resetUserCubits();
-                },
+                listener: (context, state) => appRouter.goToLogin(),
                 child: Container(
                   decoration: const BoxDecoration(
                     gradient: LinearGradient(

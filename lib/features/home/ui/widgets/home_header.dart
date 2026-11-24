@@ -27,7 +27,7 @@ class HomeHeader extends StatelessWidget {
         Spacer(),
 
         GestureDetector(
-          onTap: () => context.pushNamed(Routes.notifications),
+          onTap: () => context.pushNamed(Routes.notification),
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
             decoration: BoxDecoration(
