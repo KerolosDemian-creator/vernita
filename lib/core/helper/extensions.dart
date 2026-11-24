@@ -22,7 +22,4 @@ extension Navigation on BuildContext {
   }
 
   void pop() => Navigator.of(this).pop();
-
-  /// Back to the main layout (first route).
-  void popToFirst() => Navigator.of(this).popUntil((route) => route.isFirst);
 }
