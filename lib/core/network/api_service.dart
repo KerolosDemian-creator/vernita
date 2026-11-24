@@ -9,6 +9,8 @@ import 'package:vernita/features/authentication/log_in/data/models/log_in_respon
 import 'package:vernita/features/authentication/reset_password/data/models/reset_pass_request_model.dart';
 import 'package:vernita/features/authentication/sign_up/data/models/sign_up_request_model.dart';
 import 'package:vernita/features/authentication/sign_up/data/models/sign_up_response_model.dart';
+import 'package:vernita/features/profile/profile/data/models/update_profile_request_model.dart';
+import 'package:vernita/features/profile/profile/data/models/user_model.dart';
 part 'api_service.g.dart';
 
 @RestApi(baseUrl: ApiEndPoints.apiBaseUrl)
@@ -31,5 +33,13 @@ abstract class ApiService {
   @POST(ApiEndPoints.resetPassword)
   Future<MessageResponseModel> resetPassword(
     @Body() ResetPassRequestModel resetPassRequestBody,
+  );
+
+  @GET(ApiEndPoints.currentUser)
+  Future<UserModel> getCurrentUser();
+
+  @PUT(ApiEndPoints.currentUser)
+  Future<UserModel> updateCurrentUser(
+    @Body() UpdateProfileRequestModel updateProfileRequestBody,
   );
 }

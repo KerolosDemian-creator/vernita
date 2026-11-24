@@ -1,0 +1,652 @@
+Index: lib/vernita_app.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import 'package:flutter/material.dart';\r\nimport 'package:flutter_bloc/flutter_bloc.dart';\r\nimport 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';\r\nimport 'package:vernita/core/di/dependency_injection.dart';\r\nimport 'package:vernita/core/routing/app_router.dart';\r\nimport 'package:vernita/core/routing/routes.dart';\r\nimport 'package:vernita/features/calendar/logic/calendar_cubit.dart';\r\nimport 'package:vernita/features/profile/profile/logic/profile_cubit.dart';\r\n\r\nclass VernitaApp extends StatelessWidget {\r\n  const VernitaApp({super.key, required this.appRouter});\r\n  final AppRouter appRouter;\r\n\r\n  @override\r\n  Widget build(BuildContext context) {\r\n    return ScreenUtilPlusInit(\r\n      designSize: const Size(375, 812),\r\n      splitScreenMode: true,\r\n      ensureScreenSize: true,\r\n      builder: (context, child) {\r\n        return MaterialApp(\r\n          debugShowCheckedModeBanner: false,\r\n          title: 'Vernita',\r\n          theme: ThemeData(scaffoldBackgroundColor: Colors.transparent),\r\n          // App-wide cubits: available in every screen, including pushed routes.\r\n          builder: (context, child) => MultiBlocProvider(\r\n            providers: [\r\n              // No load() here: ProfileScreen loads it after login (we need the token).\r\n              BlocProvider(create: (_) => getIt<ProfileCubit>()),\r\n              BlocProvider(create: (_) => getIt<CalendarCubit>()),\r\n            ],\r\n            child: Container(\r\n              decoration: const BoxDecoration(\r\n                gradient: LinearGradient(\r\n                  begin: Alignment.topCenter,\r\n                  end: Alignment.bottomCenter,\r\n                  colors: [Color(0xFFFFF3E6), Color(0xFFFCE3D2)],\r\n                ),\r\n              ),\r\n              child: child,\r\n            ),\r\n          ),\r\n          initialRoute: Routes.main,\r\n          onGenerateRoute: appRouter.generateRoute,\r\n        );\r\n      },\r\n    );\r\n  }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/lib/vernita_app.dart b/lib/vernita_app.dart
+--- a/lib/vernita_app.dart	(revision 26dc8968c85713a3cbdd2d180d60743b233f394e)
++++ b/lib/vernita_app.dart	(date 1794680743897)
+@@ -40,7 +40,7 @@
+               child: child,
+             ),
+           ),
+-          initialRoute: Routes.main,
++          initialRoute: Routes.logIn,
+           onGenerateRoute: appRouter.generateRoute,
+         );
+       },
+Index: lib/features/settings/ui/notification_settings_screen.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/lib/features/settings/ui/notification_settings_screen.dart b/lib/features/settings/ui/notification_settings_screen.dart
+deleted file mode 100644
+--- a/lib/features/settings/ui/notification_settings_screen.dart	(revision 26dc8968c85713a3cbdd2d180d60743b233f394e)
++++ /dev/null	(revision 26dc8968c85713a3cbdd2d180d60743b233f394e)
+@@ -1,11 +0,0 @@
+-import 'package:flutter/material.dart';
+-import 'package:vernita/features/settings/ui/widgets/notification_settings_body.dart';
+-
+-class NotificationSettingsScreen extends StatelessWidget {
+-  const NotificationSettingsScreen({super.key});
+-
+-  @override
+-  Widget build(BuildContext context) {
+-    return Scaffold(body: NotificationSettingsBody());
+-  }
+-}
+Index: lib/features/settings/ui/widgets/settings_section.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/lib/features/settings/ui/widgets/settings_section.dart b/lib/features/settings/ui/widgets/settings_section.dart
+deleted file mode 100644
+--- a/lib/features/settings/ui/widgets/settings_section.dart	(revision 26dc8968c85713a3cbdd2d180d60743b233f394e)
++++ /dev/null	(revision 26dc8968c85713a3cbdd2d180d60743b233f394e)
+@@ -1,35 +0,0 @@
+-import 'package:flutter/material.dart';
+-import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
+-import 'package:vernita/core/helper/spacing.dart';
+-import 'package:vernita/core/theme/app_colors.dart';
+-import 'package:vernita/core/theme/app_text_styles.dart';
+-
+-class SettingsSection extends StatelessWidget {
+-  const SettingsSection({
+-    super.key,
+-    required this.sectionTitle,
+-    required this.children,
+-  });
+-
+-  final String sectionTitle;
+-  final List<Widget> children;
+-
+-  @override
+-  Widget build(BuildContext context) {
+-    return Column(
+-      crossAxisAlignment: CrossAxisAlignment.start,
+-      children: [
+-        Text(sectionTitle, style: AppTextStyles.font12BrowPoppins600W),
+-        verticalSpace(12),
+-        Container(
+-          width: double.infinity,
+-          decoration: BoxDecoration(
+-            color: AppColors.white,
+-            borderRadius: BorderRadius.circular(28.r),
+-          ),
+-          child: Column(children: children),
+-        ),
+-      ],
+-    );
+-  }
+-}
+Index: lib/features/settings/ui/widgets/notifications_settings_group.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/lib/features/settings/ui/widgets/notifications_settings_group.dart b/lib/features/settings/ui/widgets/notifications_settings_group.dart
+deleted file mode 100644
+--- a/lib/features/settings/ui/widgets/notifications_settings_group.dart	(revision 26dc8968c85713a3cbdd2d180d60743b233f394e)
++++ /dev/null	(revision 26dc8968c85713a3cbdd2d180d60743b233f394e)
+@@ -1,94 +0,0 @@
+-import 'package:flutter/material.dart';
+-import 'package:vernita/core/helper/spacing.dart';
+-import 'package:vernita/core/theme/app_colors.dart';
+-import 'package:vernita/core/widgets/app_switch.dart';
+-import 'package:vernita/features/settings/ui/widgets/settings_item.dart';
+-import 'package:vernita/features/settings/ui/widgets/settings_section.dart';
+-
+-// This screen is UI-only for now; the switches intentionally do not store state.
+-void _onSwitchChanged(bool _) {}
+-
+-class NotificationsSettingsGroup extends StatelessWidget {
+-  const NotificationsSettingsGroup({super.key});
+-
+-  @override
+-  Widget build(BuildContext context) {
+-    return Column(
+-      crossAxisAlignment: CrossAxisAlignment.start,
+-      children: [
+-        const SettingsSection(
+-          sectionTitle: 'INTERVIEW',
+-          children: [
+-            SettingsItem(
+-              icon: Icons.calendar_month_outlined,
+-              iconBackgroundColor: AppColors.paleApricot,
+-              title: 'Scheduled Reminders',
+-              subtitle: 'Get reminded before your sessions',
+-              showChevron: false,
+-              trailing: AppSwitch(value: true, onChanged: _onSwitchChanged),
+-            ),
+-            SettingsItem(
+-              icon: Icons.verified_outlined,
+-              iconBackgroundColor: AppColors.paleApricot,
+-              title: 'Performance Insights',
+-              subtitle: 'Weekly score updates and tips',
+-              showChevron: false,
+-              trailing: AppSwitch(value: true, onChanged: _onSwitchChanged),
+-            ),
+-            SettingsItem(
+-              icon: Icons.bolt_outlined,
+-              iconBackgroundColor: AppColors.paleApricot,
+-              title: 'New AI Features',
+-              subtitle: 'When new interview modes drop',
+-              showChevron: false,
+-              trailing: AppSwitch(value: false, onChanged: _onSwitchChanged),
+-            ),
+-          ],
+-        ),
+-        verticalSpace(24),
+-        const SettingsSection(
+-          sectionTitle: 'ACCOUNT & SECURITY',
+-          children: [
+-            SettingsItem(
+-              icon: Icons.verified_user_outlined,
+-              iconBackgroundColor: AppColors.paleApricot,
+-              title: 'Security Alerts',
+-              subtitle: 'Suspicious login attempts',
+-              showChevron: false,
+-              trailing: AppSwitch(value: true, onChanged: _onSwitchChanged),
+-            ),
+-          ],
+-        ),
+-        verticalSpace(24),
+-        const SettingsSection(
+-          sectionTitle: 'ENGAGEMENT',
+-          children: [
+-            SettingsItem(
+-              icon: Icons.trending_up_rounded,
+-              iconBackgroundColor: AppColors.paleApricot,
+-              title: 'Streak Reminders',
+-              showChevron: false,
+-              trailing: AppSwitch(value: true, onChanged: _onSwitchChanged),
+-            ),
+-            SettingsItem(
+-              icon: Icons.auto_awesome_outlined,
+-              iconBackgroundColor: AppColors.paleApricot,
+-              title: 'Achievements',
+-              subtitle: 'Celebrate your milestones',
+-              showChevron: false,
+-              trailing: AppSwitch(value: true, onChanged: _onSwitchChanged),
+-            ),
+-            SettingsItem(
+-              icon: Icons.chat_bubble_outline_rounded,
+-              iconBackgroundColor: AppColors.paleApricot,
+-              title: 'Tips & Motivation',
+-              subtitle: 'Useful tips and motivation to keep going',
+-              showChevron: false,
+-              trailing: AppSwitch(value: true, onChanged: _onSwitchChanged),
+-            ),
+-          ],
+-        ),
+-      ],
+-    );
+-  }
+-}
+Index: lib/features/settings/ui/widgets/settings_item.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/lib/features/settings/ui/widgets/settings_item.dart b/lib/features/settings/ui/widgets/settings_item.dart
+deleted file mode 100644
+--- a/lib/features/settings/ui/widgets/settings_item.dart	(revision 26dc8968c85713a3cbdd2d180d60743b233f394e)
++++ /dev/null	(revision 26dc8968c85713a3cbdd2d180d60743b233f394e)
+@@ -1,126 +0,0 @@
+-import 'package:flutter/material.dart';
+-import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
+-import 'package:vernita/core/helper/spacing.dart';
+-import 'package:vernita/core/theme/app_colors.dart';
+-import 'package:vernita/core/theme/app_text_styles.dart';
+-
+-class SettingsItem extends StatelessWidget {
+-  const SettingsItem({
+-    super.key,
+-    required this.icon,
+-    required this.title,
+-    this.subtitle,
+-    this.value,
+-    this.iconBackgroundColor,
+-    this.trailing,
+-    this.showChevron = true,
+-    this.onTap,
+-  });
+-
+-  final IconData icon;
+-  final String title;
+-  final String? subtitle;
+-  final Color? iconBackgroundColor;
+-  final String? value;
+-  final Widget? trailing;
+-  final bool showChevron;
+-  final VoidCallback? onTap;
+-
+-  @override
+-  Widget build(BuildContext context) {
+-    return GestureDetector(
+-      behavior: HitTestBehavior.opaque,
+-      onTap: onTap,
+-      child: Container(
+-        width: double.infinity,
+-        constraints: BoxConstraints(minHeight: 75.h),
+-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+-        alignment: Alignment.center,
+-        child: Row(
+-          crossAxisAlignment: subtitle == null || iconBackgroundColor != null
+-              ? CrossAxisAlignment.center
+-              : CrossAxisAlignment.start,
+-          children: [
+-            if (iconBackgroundColor == null)
+-              SizedBox(
+-                height: 27.h,
+-                child: Center(
+-                  child: Icon(
+-                    icon,
+-                    color: AppColors.nonSelectedIcon,
+-                    size: 22.r,
+-                  ),
+-                ),
+-              )
+-            else
+-              Container(
+-                width: 38.r,
+-                height: 38.r,
+-                decoration: BoxDecoration(
+-                  color: iconBackgroundColor,
+-                  shape: BoxShape.circle,
+-                ),
+-                child: Center(
+-                  child: Icon(
+-                    icon,
+-                    color: AppColors.nonSelectedIcon,
+-                    size: 22.r,
+-                  ),
+-                ),
+-              ),
+-            horizantalSpace(16),
+-            Expanded(
+-              child: Column(
+-                mainAxisSize: MainAxisSize.min,
+-                crossAxisAlignment: CrossAxisAlignment.start,
+-                children: [
+-                  Text(
+-                    title,
+-                    maxLines: 2,
+-                    overflow: TextOverflow.ellipsis,
+-                    style: AppTextStyles.font14BrownPoppins700W,
+-                  ),
+-                  if (subtitle != null) ...[
+-                    verticalSpace(2),
+-                    Text(
+-                      subtitle!,
+-                      style: AppTextStyles.font12GreyPoppins400W.copyWith(
+-                        height: 1.45,
+-                      ),
+-                    ),
+-                  ],
+-                ],
+-              ),
+-            ),
+-            if (value != null) ...[
+-              horizantalSpace(8),
+-              SizedBox(
+-                height: 27.h,
+-                child: Center(
+-                  child: Text(
+-                    value!,
+-                    style: AppTextStyles.font14LightPeachPoppins400W,
+-                  ),
+-                ),
+-              ),
+-            ],
+-            if (trailing != null) ...[horizantalSpace(8), trailing!],
+-            if (showChevron) ...[
+-              horizantalSpace(6),
+-              SizedBox(
+-                height: 27.h,
+-                child: Center(
+-                  child: Icon(
+-                    Icons.arrow_forward_ios_rounded,
+-                    color: AppColors.nonSelectedIcon,
+-                    size: 12.r,
+-                  ),
+-                ),
+-              ),
+-            ],
+-          ],
+-        ),
+-      ),
+-    );
+-  }
+-}
+Index: lib/features/settings/ui/settings_screen.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/lib/features/settings/ui/settings_screen.dart b/lib/features/settings/ui/settings_screen.dart
+deleted file mode 100644
+--- a/lib/features/settings/ui/settings_screen.dart	(revision 26dc8968c85713a3cbdd2d180d60743b233f394e)
++++ /dev/null	(revision 26dc8968c85713a3cbdd2d180d60743b233f394e)
+@@ -1,11 +0,0 @@
+-import 'package:flutter/material.dart';
+-import 'package:vernita/features/settings/ui/widgets/settings_body.dart';
+-
+-class SettingsScreen extends StatelessWidget {
+-  const SettingsScreen({super.key});
+-
+-  @override
+-  Widget build(BuildContext context) {
+-    return Scaffold(body: SettingsBody());
+-  }
+-}
+Index: lib/features/settings/ui/widgets/settings_body.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/lib/features/settings/ui/widgets/settings_body.dart b/lib/features/settings/ui/widgets/settings_body.dart
+deleted file mode 100644
+--- a/lib/features/settings/ui/widgets/settings_body.dart	(revision 26dc8968c85713a3cbdd2d180d60743b233f394e)
++++ /dev/null	(revision 26dc8968c85713a3cbdd2d180d60743b233f394e)
+@@ -1,36 +0,0 @@
+-import 'package:flutter/material.dart';
+-import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
+-import 'package:vernita/core/helper/spacing.dart';
+-import 'package:vernita/core/widgets/app_header.dart';
+-import 'package:vernita/features/settings/ui/widgets/settings_sections_group.dart';
+-
+-class SettingsBody extends StatefulWidget {
+-  const SettingsBody({super.key});
+-
+-  @override
+-  State<SettingsBody> createState() => _SettingsBodyState();
+-}
+-
+-class _SettingsBodyState extends State<SettingsBody> {
+-  bool _isDarkMode = true;
+-
+-  @override
+-  Widget build(BuildContext context) {
+-    return SafeArea(
+-      child: SingleChildScrollView(
+-        padding: EdgeInsets.fromLTRB(20.w, 8.h, 20.w, 24.h),
+-        child: Column(
+-          crossAxisAlignment: CrossAxisAlignment.start,
+-          children: [
+-            const AppHeader(title: 'Settings'),
+-            verticalSpace(18),
+-            SettingsSectionsGroup(
+-              isDarkMode: _isDarkMode,
+-              onDarkModeChanged: (value) => setState(() => _isDarkMode = value),
+-            ),
+-          ],
+-        ),
+-      ),
+-    );
+-  }
+-}
+Index: lib/features/settings/ui/widgets/notification_settings_body.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/lib/features/settings/ui/widgets/notification_settings_body.dart b/lib/features/settings/ui/widgets/notification_settings_body.dart
+deleted file mode 100644
+--- a/lib/features/settings/ui/widgets/notification_settings_body.dart	(revision 26dc8968c85713a3cbdd2d180d60743b233f394e)
++++ /dev/null	(revision 26dc8968c85713a3cbdd2d180d60743b233f394e)
+@@ -1,26 +0,0 @@
+-import 'package:flutter/material.dart';
+-import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
+-import 'package:vernita/core/helper/spacing.dart';
+-import 'package:vernita/core/widgets/app_header.dart';
+-import 'package:vernita/features/settings/ui/widgets/notifications_settings_group.dart';
+-
+-class NotificationSettingsBody extends StatelessWidget {
+-  const NotificationSettingsBody({super.key});
+-
+-  @override
+-  Widget build(BuildContext context) {
+-    return SafeArea(
+-      child: SingleChildScrollView(
+-        padding: EdgeInsets.fromLTRB(20.w, 8.h, 20.w, 24.h),
+-        child: Column(
+-          crossAxisAlignment: CrossAxisAlignment.start,
+-          children: [
+-            const AppHeader(title: 'Notifications', centerTitle: true),
+-            verticalSpace(18),
+-            const NotificationsSettingsGroup(),
+-          ],
+-        ),
+-      ),
+-    );
+-  }
+-}
+Index: lib/features/settings/ui/widgets/settings_sections_group.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/lib/features/settings/ui/widgets/settings_sections_group.dart b/lib/features/settings/ui/widgets/settings_sections_group.dart
+deleted file mode 100644
+--- a/lib/features/settings/ui/widgets/settings_sections_group.dart	(revision 26dc8968c85713a3cbdd2d180d60743b233f394e)
++++ /dev/null	(revision 26dc8968c85713a3cbdd2d180d60743b233f394e)
+@@ -1,81 +0,0 @@
+-import 'package:flutter/material.dart';
+-import 'package:vernita/core/helper/extensions.dart';
+-import 'package:vernita/core/helper/spacing.dart';
+-import 'package:vernita/core/routing/routes.dart';
+-import 'package:vernita/core/widgets/app_switch.dart';
+-import 'package:vernita/features/settings/ui/widgets/settings_item.dart';
+-import 'package:vernita/features/settings/ui/widgets/settings_section.dart';
+-
+-class SettingsSectionsGroup extends StatelessWidget {
+-  const SettingsSectionsGroup({
+-    super.key,
+-    required this.isDarkMode,
+-    required this.onDarkModeChanged,
+-  });
+-
+-  final bool isDarkMode;
+-  final ValueChanged<bool> onDarkModeChanged;
+-
+-  @override
+-  Widget build(BuildContext context) {
+-    return Column(
+-      crossAxisAlignment: CrossAxisAlignment.start,
+-      children: [
+-        const SettingsSection(
+-          sectionTitle: 'ACCOUNT',
+-          children: [
+-            SettingsItem(
+-              icon: Icons.person_outline_rounded,
+-              title: 'Personal Information',
+-            ),
+-            SettingsItem(
+-              icon: Icons.shield_outlined,
+-              title: 'Password & Security',
+-            ),
+-          ],
+-        ),
+-        verticalSpace(24),
+-        const SettingsSection(
+-          sectionTitle: 'AI INTERVIEW ENGINE',
+-          children: [
+-            SettingsItem(
+-              icon: Icons.mic_none_rounded,
+-              title: 'AI Voice',
+-              value: 'Sarah (US)',
+-            ),
+-            SettingsItem(
+-              icon: Icons.videocam_outlined,
+-              title: 'Camera & Posture Check',
+-              subtitle: 'Quick preview for framing & lighting before mocks',
+-            ),
+-          ],
+-        ),
+-        verticalSpace(24),
+-        SettingsSection(
+-          sectionTitle: 'APP SETTINGS',
+-          children: [
+-            SettingsItem(
+-              icon: Icons.notifications_none_rounded,
+-              title: 'Push Notifications',
+-              onTap: () => context.pushNamed(Routes.notificationSettings),
+-            ),
+-            SettingsItem(
+-              icon: Icons.light_mode_outlined,
+-              title: 'Dark Mode',
+-              showChevron: false,
+-              trailing: AppSwitch(
+-                value: isDarkMode,
+-                onChanged: onDarkModeChanged,
+-              ),
+-            ),
+-            const SettingsItem(
+-              icon: Icons.language_rounded,
+-              title: 'Language',
+-              value: 'English',
+-            ),
+-          ],
+-        ),
+-      ],
+-    );
+-  }
+-}
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"FileEditorManager\">\r\n    <leaf>\r\n      <file leaf-file-name=\"main.dart\" pinned=\"false\" current-in-tab=\"true\">\r\n        <entry file=\"file://$PROJECT_DIR$/lib/main.dart\">\r\n          <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n            <state relative-caret-position=\"0\">\r\n              <caret line=\"0\" column=\"0\" lean-forward=\"false\" selection-start-line=\"0\" selection-start-column=\"0\" selection-end-line=\"0\" selection-end-column=\"0\" />\r\n            </state>\r\n          </provider>\r\n        </entry>\r\n      </file>\r\n    </leaf>\r\n  </component>\r\n  <component name=\"ToolWindowManager\">\r\n    <editor active=\"true\" />\r\n    <layout>\r\n      <window_info id=\"Project\" active=\"false\" anchor=\"left\" auto_hide=\"false\" internal_type=\"DOCKED\" type=\"DOCKED\" visible=\"true\" show_stripe_button=\"true\" weight=\"0.25\" sideWeight=\"0.5\" order=\"0\" side_tool=\"false\" content_ui=\"combo\" />\r\n    </layout>\r\n  </component>\r\n  <component name=\"ProjectView\">\r\n    <navigator currentView=\"ProjectPane\" proportions=\"\" version=\"1\">\r\n    </navigator>\r\n    <panes>\r\n      <pane id=\"ProjectPane\">\r\n        <option name=\"show-excluded-files\" value=\"false\" />\r\n      </pane>\r\n    </panes>\r\n  </component>\r\n  <component name=\"PropertiesComponent\">\r\n    <property name=\"last_opened_file_path\" value=\"$PROJECT_DIR$\" />\r\n    <property name=\"dart.analysis.tool.window.force.activate\" value=\"true\" />\r\n    <property name=\"show.migrate.to.gradle.popup\" value=\"false\" />\r\n  </component>\r\n</project>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 26dc8968c85713a3cbdd2d180d60743b233f394e)
++++ b/.idea/workspace.xml	(date 1794680793147)
+@@ -1,5 +1,38 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
++  <component name="AutoImportSettings">
++    <option name="autoReloadType" value="NONE" />
++  </component>
++  <component name="ChangeListManager">
++    <list default="true" id="f93fde3a-54e6-455a-ae4e-c646fa1814d9" name="Changes" comment="">
++      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/android/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/android/gradle.properties" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/lib/core/errors/api_error_handler.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/core/errors/api_error_handler.dart" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/lib/core/helper/extensions.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/core/helper/extensions.dart" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/lib/core/network/api_constants.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/core/network/api_constants.dart" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/lib/core/network/api_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/core/network/api_service.dart" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/lib/core/network/api_service.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/core/network/api_service.g.dart" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/lib/core/network/dio_factory.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/core/network/dio_factory.dart" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/lib/features/settings/ui/notification_settings_screen.dart" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/lib/features/settings/ui/settings_screen.dart" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/lib/features/settings/ui/widgets/notification_settings_body.dart" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/lib/features/settings/ui/widgets/notifications_settings_group.dart" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/lib/features/settings/ui/widgets/settings_body.dart" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/lib/features/settings/ui/widgets/settings_item.dart" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/lib/features/settings/ui/widgets/settings_section.dart" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/lib/features/settings/ui/widgets/settings_sections_group.dart" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/lib/vernita_app.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/vernita_app.dart" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/vernita.iml" beforeDir="false" afterPath="$PROJECT_DIR$/vernita.iml" afterDir="false" />
++    </list>
++    <option name="SHOW_DIALOG" value="false" />
++    <option name="HIGHLIGHT_CONFLICTS" value="true" />
++    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
++    <option name="LAST_RESOLUTION" value="IGNORE" />
++  </component>
++  <component name="ClangdSettings">
++    <option name="formatViaClangd" value="false" />
++  </component>
+   <component name="FileEditorManager">
+     <leaf>
+       <file leaf-file-name="main.dart" pinned="false" current-in-tab="true">
+@@ -13,24 +46,70 @@
+       </file>
+     </leaf>
+   </component>
+-  <component name="ToolWindowManager">
+-    <editor active="true" />
+-    <layout>
+-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+-    </layout>
++  <component name="Git.Settings">
++    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
++  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
++  "lastFilter": {
++    "state": "OPEN",
++    "assignee": "bassantmahmoud1"
++  }
++}]]></component>
++  <component name="GithubPullRequestsUISettings"><![CDATA[{
++  "selectedUrlAndAccountId": {
++    "url": "https://github.com/KerolosDemian-creator/vernita.git",
++    "accountId": "7660dac3-2d9c-4c01-998c-cb494e8f9360"
++  }
++}]]></component>
++  <component name="ProjectColorInfo"><![CDATA[{
++  "associatedIndex": 4
++}]]></component>
++  <component name="ProjectId" id="3M6n9h3PW7EevMqsVfE10G3BZlk" />
+   <component name="ProjectView">
+-    <navigator currentView="ProjectPane" proportions="" version="1">
+-    </navigator>
++    <navigator currentView="ProjectPane" proportions="" version="1" />
+     <panes>
+       <pane id="ProjectPane">
+         <option name="show-excluded-files" value="false" />
+       </pane>
+     </panes>
+   </component>
+-  <component name="PropertiesComponent">
+-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+-    <property name="dart.analysis.tool.window.force.activate" value="true" />
+-    <property name="show.migrate.to.gradle.popup" value="false" />
++  <component name="ProjectViewState">
++    <option name="hideEmptyMiddlePackages" value="true" />
++    <option name="showLibraryContents" value="true" />
+   </component>
+-</project>
++  <component name="PropertiesComponent"><![CDATA[{
++  "keyToString": {
++    "Flutter.main.dart.executor": "Run",
++    "RunOnceActivity.ShowReadmeOnStart": "true",
++    "RunOnceActivity.cidr.known.project.marker": "true",
++    "RunOnceActivity.git.unshallow": "true",
++    "RunOnceActivity.readMode.enableVisualFormatting": "true",
++    "cf.first.check.clang-format": "false",
++    "cidr.known.project.marker": "true",
++    "dart.analysis.tool.window.visible": "false",
++    "git-widget-placeholder": "#26 on feature/profile-screens",
++    "io.flutter.project.isFirstOpen": "true",
++    "kotlin-language-version-configured": "true",
++    "last_opened_file_path": "C:/projects/vernita",
++    "settings.editor.selected.configurable": "dart.settings",
++    "show.migrate.to.gradle.popup": "false"
++  }
++}]]></component>
++  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
++  <component name="TaskManager">
++    <task active="true" id="Default" summary="Default task">
++      <changelist id="f93fde3a-54e6-455a-ae4e-c646fa1814d9" name="Changes" comment="" />
++      <created>1794679734619</created>
++      <option name="number" value="Default" />
++      <option name="presentableId" value="Default" />
++      <updated>1794679734619</updated>
++    </task>
++    <servers />
++  </component>
++  <component name="ToolWindowManager">
++    <editor active="true" />
++    <layout>
++      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
++    </layout>
++  </component>
++</project>
+\ No newline at end of file

@@ -32,10 +32,10 @@ class SignUpListener extends StatelessWidget {
           },
           success: (user) {
             context.pop();
-            // Registration does not create an authenticated session: the
-            // backend returns no access token, so the user must sign in.
+            // SignUpCubit already signed the user in (token + session), so
+            // we go straight to the app.
             context.pushNamedAndRemoveUntil(
-              Routes.logIn,
+              Routes.main,
               predicate: (_) => false,
             );
           },

@@ -16,16 +16,23 @@ import 'package:vernita/features/authentication/reset_password/logic/reset_pass_
 import 'package:vernita/features/authentication/sign_up/data/repo/sign_up_repo.dart';
 import 'package:vernita/features/authentication/sign_up/data/repo/sign_up_repo_imp.dart';
 import 'package:vernita/features/authentication/sign_up/logic/sign_up_cubit.dart';
+import 'package:vernita/features/calendar/logic/calendar_cubit.dart';
 import 'package:vernita/features/home/data/data_source/cv_remote_data_source.dart';
 import 'package:vernita/features/home/data/repo/cv_repo.dart';
 import 'package:vernita/features/home/data/repo/cv_repo_imp.dart';
 import 'package:vernita/features/home/logic/cv_upload_cubit.dart';
+import 'package:vernita/features/profile/profile/data/repo/profile_repo.dart';
+import 'package:vernita/features/profile/profile/data/repo/profile_repo_imp.dart';
+import 'package:vernita/features/profile/profile/logic/profile_cubit.dart';
 
 final getIt = GetIt.instance;
 
 Future<void> getItSetup() async {
   await SharedPrefHelper.init();
 
+  getIt.registerLazySingleton<CalendarCubit>(() => CalendarCubit());
+
+  // The token storage must exist first: Dio uses it to add the token.
   getIt.registerLazySingleton<AuthTokenStorage>(() => AuthTokenStorage());
   getIt.registerLazySingleton<AuthSessionCubit>(
     () => AuthSessionCubit(getIt()),
@@ -58,4 +65,14 @@ Future<void> getItSetup() async {
 
   getIt.registerLazySingleton<ResetPassRepo>(() => ResetPassRepoImp(getIt()));
   getIt.registerFactory<ResetPassCubit>(() => ResetPassCubit(getIt()));
+
+  getIt.registerLazySingleton<ProfileRepo>(() => ProfileRepoImp(getIt()));
+  getIt.registerLazySingleton<ProfileCubit>(() => ProfileCubit(getIt()));
+}
+
+/// Drops the per-user cubits so the next user never sees the previous
+/// user's data.
+void resetUserCubits() {
+  getIt.resetLazySingleton<ProfileCubit>();
+  getIt.resetLazySingleton<CalendarCubit>();
 }
