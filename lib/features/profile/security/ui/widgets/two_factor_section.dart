@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vernita/core/theme/app_colors.dart';
 import '../../../widgets/app_switch.dart';
 import '../../../widgets/profile_tile.dart';
 import '../../../widgets/section_card.dart';
 import '../../../widgets/section_label.dart';
-import '../../logic/security_cubit.dart';
-import '../../logic/security_state.dart';
 
-class TwoFactorSection extends StatelessWidget {
+class TwoFactorSection extends StatefulWidget {
   const TwoFactorSection({super.key});
+
+  @override
+  State<TwoFactorSection> createState() => _TwoFactorSectionState();
+}
+
+class _TwoFactorSectionState extends State<TwoFactorSection> {
+  bool _twoFactorEnabled = true;
 
   @override
   Widget build(BuildContext context) {
@@ -18,16 +22,14 @@ class TwoFactorSection extends StatelessWidget {
         const SectionLabel('Two-Factor Authentication'),
         SectionCard(
           children: [
-            BlocBuilder<SecurityCubit, SecurityState>(
-              buildWhen: (p, c) => p.twoFactorEnabled != c.twoFactorEnabled,
-              builder: (context, state) => ProfileTile(
-                icon: Icons.smartphone_rounded,
-                title: 'Authenticator App',
-                subtitle: 'Secure your account with 2FA',
-                trailing: AppSwitch(
-                  value: state.twoFactorEnabled,
-                  onChanged: context.read<SecurityCubit>().toggleTwoFactor,
-                ),
+            ProfileTile(
+              icon: Icons.smartphone_rounded,
+              title: 'Authenticator App',
+              subtitle: 'Secure your account with 2FA',
+              trailing: AppSwitch(
+                value: _twoFactorEnabled,
+                onChanged: (isEnabled) =>
+                    setState(() => _twoFactorEnabled = isEnabled),
               ),
             ),
             ProfileTile(

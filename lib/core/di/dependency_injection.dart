@@ -30,7 +30,7 @@ final getIt = GetIt.instance;
 Future<void> getItSetup() async {
   await SharedPrefHelper.init();
 
-  getIt.registerFactory<CalendarCubit>(() => CalendarCubit());
+  getIt.registerLazySingleton<CalendarCubit>(() => CalendarCubit());
 
   // The token storage must exist first: Dio uses it to add the token.
   getIt.registerLazySingleton<AuthTokenStorage>(() => AuthTokenStorage());
@@ -53,7 +53,7 @@ Future<void> getItSetup() async {
   getIt.registerFactory<CvUploadCubit>(() => CvUploadCubit(getIt()));
 
   getIt.registerLazySingleton<SignUpRepo>(() => SignUpRepoImp(getIt()));
-  getIt.registerFactory<SignUpCubit>(() => SignUpCubit(getIt(), getIt(), getIt()));
+  getIt.registerFactory<SignUpCubit>(() => SignUpCubit(getIt()));
 
   getIt.registerLazySingleton<LogInRepo>(() => LogInRepoImp(getIt()));
   getIt.registerFactory<LogInCubit>(
@@ -67,5 +67,12 @@ Future<void> getItSetup() async {
   getIt.registerFactory<ResetPassCubit>(() => ResetPassCubit(getIt()));
 
   getIt.registerLazySingleton<ProfileRepo>(() => ProfileRepoImp(getIt()));
-  getIt.registerFactory<ProfileCubit>(() => ProfileCubit(getIt(), getIt()));
+  getIt.registerLazySingleton<ProfileCubit>(() => ProfileCubit(getIt()));
+}
+
+/// Drops the per-user cubits so the next user never sees the previous
+/// user's data.
+void resetUserCubits() {
+  getIt.resetLazySingleton<ProfileCubit>();
+  getIt.resetLazySingleton<CalendarCubit>();
 }

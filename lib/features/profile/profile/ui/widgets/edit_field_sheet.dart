@@ -15,7 +15,7 @@ Future<void> showEditFieldSheet(
   required ProfileField field,
   required String initial,
 }) {
-  context.read<ProfileCubit>().resetUpdateStatus();
+  final profileCubit = context.read<ProfileCubit>()..resetUpdateStatus();
   return showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
@@ -23,7 +23,10 @@ Future<void> showEditFieldSheet(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(28.r)),
     ),
-    builder: (_) => _EditFieldSheet(field: field, initial: initial),
+    builder: (_) => BlocProvider.value(
+      value: profileCubit,
+      child: _EditFieldSheet(field: field, initial: initial),
+    ),
   );
 }
 

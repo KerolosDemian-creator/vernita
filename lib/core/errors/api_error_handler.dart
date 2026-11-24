@@ -51,15 +51,13 @@ ApiErrorModel _fromDioException(DioException error) {
     case DioExceptionType.receiveTimeout:
     case DioExceptionType.transformTimeout:
       return _buildError(
-        message:
-            'The server is not responding. Check that the backend is running and reachable, then try again.',
+        message: 'The request timed out. Please try again.',
         status: -1,
         error: 'Timeout',
       );
     case DioExceptionType.connectionError:
       return _buildError(
-        message:
-            'Cannot reach the server. Check that the backend is running and reachable from this device.',
+        message: 'No internet connection. Please check your network.',
         status: -2,
         error: 'Connection Error',
       );

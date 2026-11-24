@@ -1,34 +1,18 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vernita/core/storage/auth_token_storage.dart';
 import 'package:vernita/features/profile/profile/data/models/update_profile_request_model.dart';
 import 'package:vernita/features/profile/profile/data/repo/profile_repo.dart';
 import 'package:vernita/features/profile/profile/logic/profile_field.dart';
 import 'package:vernita/features/profile/profile/logic/profile_state.dart';
 
-/// App-wide user data (provided once in VernitaApp), so Profile and
-/// Personal Info always show the same user.
+/// User data shared by Profile and Personal Info, so both always show the
+/// same user.
 class ProfileCubit extends Cubit<ProfileState> {
   final ProfileRepo profileRepo;
-  final AuthTokenStorage tokenStorage;
 
-  ProfileCubit(this.profileRepo, this.tokenStorage)
-    : super(const ProfileState());
+  ProfileCubit(this.profileRepo) : super(const ProfileState());
 
   /// GET /users/me
   Future<void> load() async {
-    // No token = the user is not logged in yet, so don't call the backend
-    // (it would answer 401/403 and we'd show a confusing error).
-    final token = await tokenStorage.readToken();
-    if (token == null || token.isEmpty) {
-      emit(
-        const ProfileState(
-          status: ProfileStatus.failure,
-          errorMessage: 'Please log in to see your profile.',
-        ),
-      );
-      return;
-    }
-
     // Fresh state (no user) so we never flash the previous user's data.
     emit(const ProfileState(status: ProfileStatus.loading));
 

@@ -14,6 +14,7 @@ import 'package:vernita/features/authentication/reset_password/ui/reset_pass_scr
 import 'package:vernita/features/authentication/sign_up/logic/sign_up_cubit.dart';
 import 'package:vernita/features/authentication/sign_up/ui/sign_up_screen.dart';
 import 'package:vernita/features/calendar/data/models/calendar_event_model.dart';
+import 'package:vernita/features/calendar/logic/calendar_cubit.dart';
 import 'package:vernita/features/calendar/ui/add_event_screen.dart';
 import 'package:vernita/features/calendar/ui/add_task_screen.dart';
 import 'package:vernita/features/home/ui/home_screen.dart';
@@ -25,6 +26,7 @@ import 'package:vernita/features/profile/settings/notificationsSettings/ui/notif
 import 'package:vernita/features/onboarding/ui/onboarding_screen.dart';
 import 'package:vernita/features/notifications/ui/notifications_screen.dart';
 import 'package:vernita/features/profile/settings/ui/settings_screen.dart';
+import 'package:vernita/features/profile/profile/logic/profile_cubit.dart';
 import 'package:vernita/features/profile/profile/ui/personal_info_screen.dart';
 import 'package:vernita/features/profile/security/ui/security_screen.dart';
 
@@ -108,25 +110,42 @@ class AppRouter {
       );
 
       case Routes.personalInfo:
-        return MaterialPageRoute(builder: (_) => const PersonalInfoScreen());
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider.value(
+            value: getIt<ProfileCubit>(),
+            child: const PersonalInfoScreen(),
+          ),
+        );
 
       case Routes.security:
         return MaterialPageRoute(builder: (_) => const SecurityScreen());
 
       case Routes.addEvent:
-        return MaterialPageRoute(builder: (_) => const AddEventScreen());
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider.value(
+            value: getIt<CalendarCubit>(),
+            child: const AddEventScreen(),
+          ),
+        );
 
       case Routes.addTask:
         final type = settings.arguments is EventType
             ? settings.arguments as EventType
             : EventType.task;
-        return MaterialPageRoute(builder: (_) => AddTaskScreen(type: type));
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider.value(
+            value: getIt<CalendarCubit>(),
+            child: AddTaskScreen(type: type),
+          ),
+        );
 
       case Routes.main:
         return MaterialPageRoute(
           builder: (_) => MultiBlocProvider(
             providers: [
               BlocProvider(create: (_) => BottomNavCubit()),
+              BlocProvider.value(value: getIt<ProfileCubit>()),
+              BlocProvider.value(value: getIt<CalendarCubit>()),
               BlocProvider(create: (_) => getIt<CvUploadCubit>()..fetchCvs()),
             ],
             child: const MainLayout(),
