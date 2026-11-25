@@ -1,3 +1,8 @@
+/// TEMPORARY (testing only): skips the CV-upload requirement so the home
+/// screen shows the "after upload" state and the interview can be tried.
+/// Set to false (or delete) when the CV backend is ready.
+const bool kSkipCvForTesting = true;
+
 class AppSvgs {
   // Home Svgs
   static const String notficationsIcon =

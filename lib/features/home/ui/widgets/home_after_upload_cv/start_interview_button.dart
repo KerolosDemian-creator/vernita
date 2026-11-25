@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
+import 'package:vernita/core/routing/routes.dart';
 import 'package:vernita/core/theme/app_colors.dart';
 import 'package:vernita/core/theme/app_text_styles.dart';
 
@@ -8,7 +9,9 @@ class StartInterviewButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return GestureDetector(
+      onTap: () => Navigator.of(context).pushNamed(Routes.interviewSetup),
+      child: Container(
       height: 50.h,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -21,6 +24,7 @@ class StartInterviewButton extends StatelessWidget {
           Icon(Icons.arrow_right, color: AppColors.lightPeachText, size: 30),
         ],
       ),
+    ),
     );
   }
 }

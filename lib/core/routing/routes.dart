@@ -6,6 +6,7 @@ class Routes {
   static const String resetPassword = '/reset-password';
   static const String main = '/';
   static const String homeScreen = '/home';
+  static const String interviewSetup = '/interview-setup';
   static const String interviewSession = '/interviewSession';
   static const String profile = '/profile';
   static const String personalInfo = '/personal-info';

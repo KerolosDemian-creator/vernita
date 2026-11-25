@@ -53,7 +53,9 @@ Future<void> getItSetup() async {
   getIt.registerFactory<CvUploadCubit>(() => CvUploadCubit(getIt()));
 
   getIt.registerLazySingleton<SignUpRepo>(() => SignUpRepoImp(getIt()));
-  getIt.registerFactory<SignUpCubit>(() => SignUpCubit(getIt()));
+  getIt.registerFactory<SignUpCubit>(
+  () => SignUpCubit(getIt(), getIt<LogInRepo>(), getIt<AuthSessionCubit>()),
+);
 
   getIt.registerLazySingleton<LogInRepo>(() => LogInRepoImp(getIt()));
   getIt.registerFactory<LogInCubit>(

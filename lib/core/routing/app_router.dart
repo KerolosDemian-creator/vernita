@@ -19,7 +19,10 @@ import 'package:vernita/features/calendar/ui/add_event_screen.dart';
 import 'package:vernita/features/calendar/ui/add_task_screen.dart';
 import 'package:vernita/features/home/ui/home_screen.dart';
 import 'package:vernita/features/home/logic/cv_upload_cubit.dart';
-import 'package:vernita/features/interview/ui/interview_screen.dart';
+import 'package:vernita/features/interview/data/models/interview_session_config.dart';
+import 'package:vernita/features/interview/logic/interview_setup_cubit.dart';
+import 'package:vernita/features/interview/ui/interview_setup_screen.dart';
+import 'package:vernita/features/interview_session/ui/interview_session_screen.dart';
 import 'package:vernita/features/main/logic/bottom_nav_cubit.dart';
 import 'package:vernita/features/main/ui/main_layout.dart';
 import 'package:vernita/features/profile/settings/notificationsSettings/ui/notifications_setting_screen.dart';
@@ -88,8 +91,20 @@ class AppRouter {
 
       case Routes.homeScreen:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
+      case Routes.interviewSetup:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (_) => InterviewSetupCubit(),
+            child: const InterviewSetupScreen(),
+          ),
+        );
       case Routes.interviewSession:
-        return MaterialPageRoute(builder: (_) => const InterviewScreen());
+        final interviewConfig = settings.arguments is InterviewSessionConfig
+            ? settings.arguments as InterviewSessionConfig
+            : null;
+        return MaterialPageRoute(
+          builder: (_) => InterviewSessionScreen(config: interviewConfig),
+        );
       case Routes.sessionAnalysis:
         return MaterialPageRoute(builder: (_) => const SessionAnalysisScreen());
       case Routes.detailedSkillBreakdown:

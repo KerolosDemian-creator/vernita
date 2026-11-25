@@ -31,7 +31,7 @@ class VernitaApp extends StatelessWidget {
             theme: ThemeData(scaffoldBackgroundColor: Colors.transparent),
             initialRoute: authSessionCubit.state.isLoggedInUser
                 ? Routes.main
-                : Routes.logIn,
+                : Routes.main,
             onGenerateRoute: appRouter.generateRoute,
             builder: (context, child) => AnnotatedRegion<SystemUiOverlayStyle>(
               value: SystemUiOverlayStyle.dark.copyWith(

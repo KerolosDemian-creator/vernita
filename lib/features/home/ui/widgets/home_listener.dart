@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vernita/constants/constants.dart';
 import 'package:vernita/features/home/logic/cv_state.dart';
 import 'package:vernita/features/home/logic/cv_upload_cubit.dart';
 import 'package:vernita/features/home/ui/widgets/home_after_upload_cv/home_after_upload_cv.dart';
@@ -24,6 +25,9 @@ class HomeListener extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TEMPORARY: bypass the CV requirement while testing the interview UI.
+    if (kSkipCvForTesting) return const HomeAfterUploadCv();
+
     return BlocBuilder<CvUploadCubit, CvState>(
       builder: (context, state) {
         if (_hasActiveCv(state)) {
